@@ -1,0 +1,224 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FraymonTour Chile — Turismo y Experiencias</title>
+    <meta name="description" content="FraymonTour Chile: experiencias turísticas únicas en Chile. Tours personalizados, aventura, cultura y naturaleza." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+    <link rel="icon" href="Images/FraymonTourLogo.ico.ico" type="image/svg+xml">
+    <link rel="shortcut icon" href="Images/FraymonTourLogo.ico.ico" type="image/svg+xml">
+</head>
+<body>
+    <header class="container" role="banner">
+        <div class="brand">
+            <div class="logo"><img src="Images/FraymonTourLogo.ico.ico" alt="FraymonTour logo" width="44" height="44"></div>
+            <div>
+                <div style="font-weight:700">FraymonTour</div>
+                <div style="font-size:12px;color:#9bbefb">Chile • Experiencias únicas</div>
+            </div>
+        </div>
+        <!-- Navegación principal del sitio.
+             - Contiene enlaces ancla a secciones internas: Tours, Galería y Contacto.
+             - El último enlace tiene la clase `btn` para destacarlo visualmente (Acción principal: Reservar).
+             - `aria-label` permite a tecnologías de asistencia identificar la región como navegación. -->
+        <nav aria-label="Navegación">
+            <a href="#tours">Tours</a>
+            <a href="#galeria">Galería</a>
+            <a href="#contacto">Contacto</a>
+            <a class="btn" href="#contacto">Reservar</a>
+            <button id="open-register" class="btn" type="button">Registrarse</button>
+        </nav>
+    </header>
+
+    <main class="container" role="main">
+           <section class="hero" aria-labelledby="hero-title">
+              <!-- Columna principal del hero: título, descripción y herramientas de interacción.
+                  - Aquí va el `h1` principal con id para accesibilidad (`aria-labelledby` en la sección).
+                  - El párrafo describe la propuesta de valor.
+                  - El bloque `.search` es un pequeño formulario de búsqueda: campo de texto, selector de duración y botón.
+                  - `role="search"` y `aria-label` ayudan a identificar la funcionalidad para lectores de . -->
+              <div>
+                <h1 id="hero-title">Explora Chile con FraymonTour</h1>
+                <p>Vive aventuras, cultura y paisajes inolvidables. Tours personalizados para parejas, familias y viajeros solo.</p>
+                <div class="search" role="search" aria-label="Buscador de tours">
+                    <input type="text" placeholder="Destino (ej. Atacama, Patagonia)" aria-label="Destino" />
+                    <select aria-label="Duración">
+                        <option>1 día</option>
+                        <option>2-4 días</option>
+                        <option>5+ días</option>
+                        <option>6+ días</option>
+                    </select>
+                    <button class="btn" aria-label="Buscar">Buscar</button>
+                </div>
+
+                <div class="cards" aria-label="Tours destacados">
+                    <div class="card">
+                        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60')" role="img" aria-label="Desierto de Atacama"></div>
+                        <div>
+                            <div style="font-weight:700">Desierto de Atacama</div>
+                            <div style="font-size:13px;color:#bfe0ff">Tours astronómicos y géiseres.</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60')" role="img" aria-label="Patagonia"></div>
+                        <div>
+                            <div style="font-weight:700">Patagonia</div>
+                            <div style="font-size:13px;color:#bfe0ff">Trekking, glaciares y fauna.</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1549887534-6b4b9f1a9f3f?auto=format&fit=crop&w=800&q=60')" role="img" aria-label="Valparaíso"></div>
+                        <div>
+                            <div style="font-weight:700">Costa & Valparaíso</div>
+                            <div style="font-size:13px;color:#bfe0ff">Cultura, arquitectura y sabores.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside style="padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px">
+                <div style="font-weight:700;margin-bottom:8px">Reserva rápida</div>
+                <div style="font-size:14px;color:#cfe8ff">Elige fecha, número de personas y obtén una cotización.</div>
+                <form style="margin-top:12px;display:grid;gap:8px" aria-label="Formulario rápido">
+                    <input type="text" placeholder="Nombre" />
+                    <input type="email" placeholder="Email" />
+                    <button class="btn" type="button">Cotizar</button>
+                </form>
+                <div style="margin-top:16px;font-size:13px;color:#9fbef8">Tel: <a href="tel:+56912345678">+56 9 1234 5678</a></div>
+            </aside>
+        </section>
+
+        <section id="destinos" class="carousel-section container" aria-label="Carrusel de destinos" style="margin-top:20px">
+            <h3 style="margin:0 0 10px 0">Destinos destacados</h3>
+            <div class="carousel" id="carousel">
+                <button class="carousel-btn prev" aria-label="Anterior">‹</button>
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img src="Images/desierto_atacama.jpg" alt="Desierto de Atacama" loading="lazy">
+                        <div class="carousel-caption"><strong>Desierto de Atacama</strong><p>Observación astronómica y géiseres.</p></div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="Images/patagonia.jpg" alt="Patagonia" loading="lazy">
+                        <div class="carousel-caption"><strong>Patagonia</strong><p>Fiordos, glaciares y trekking.</p></div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="Images/costa_valparaiso.jpg" alt="Costa y Valparaíso" loading="lazy">
+                        <div class="carousel-caption"><strong>Costa & Valparaíso</strong><p>Colores y arquitectura frente al mar.</p></div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="Images/farellones.jpg" alt="Farellones" loading="lazy">
+                        <div class="carousel-caption"><strong>Farellones</strong><p>Actividades de montaña y nieve.</p></div>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="Images/valle_nevado.jpg" alt="Valle Nevado" loading="lazy">
+                        <div class="carousel-caption"><strong>Valle Nevado</strong><p>Estación de esquí con excelentes pistas.</p></div>
+                    </div>
+                </div>
+                <button class="carousel-btn next" aria-label="Siguiente">›</button>
+                <div class="carousel-dots" aria-hidden="false"></div>
+            </div>
+        </section>
+
+        <section id="tours" class="services" aria-labelledby="services-title">
+            <div class="service-card">
+                <h3 id="services-title" style="margin:0 0 8px 0">Tours Privados</h3>
+                <p style="margin:0 0 12px;color:#cfe8ff">Itinerarios hechos a tu medida con guía local y transporte.</p>
+                <ul style="margin:0 0 8px 18px;color:#bfe0ff">
+                    <li>Excursiones de un día</li>
+                    <li>Paquetes multi-día</li>
+                    <li>Tours fotográficos</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <h3 style="margin:0 0 8px 0">Aventura & Naturaleza</h3>
+                <p style="margin:0 0 12px;color:#cfe8ff">Trekking, kayak, avistamiento y experiencias sostenibles.</p>
+                <div style="font-size:13px;color:#bfe0ff">Guías certificados • Seguro de viajes opcional</div>
+            </div>
+        </section>
+
+        <section id="galeria" aria-label="Galería" style="margin-top:20px">
+            <h3 style="margin:0 0 10px 0">Galería</h3>
+            <div class="gallery">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60" alt="Paisaje Atacama">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60" alt="Glaciar">
+                <img src="https://images.unsplash.com/photo-1549887534-6b4b9f1a9f3f?auto=format&fit=crop&w=800&q=60" alt="Ciudad costera">
+            </div>
+        </section>
+
+        <section id="contacto" style="margin-top:20px">
+            <h3 style="margin:0 0 10px 0">Contacto</h3>
+            <div style="display:grid;grid-template-columns:1fr 360px;gap:16px">
+                <form class="contact-form" aria-label="Formulario de contacto" onsubmit="event.preventDefault(); alert('Gracias — pronto te contactaremos')">
+                    <input type="text" placeholder="Nombre completo" required />
+                    <input type="email" placeholder="Correo electrónico" required />
+                    <input type="text" placeholder="Asunto" />
+                    <textarea placeholder="Mensaje"></textarea>
+                    <div style="display:flex;gap:8px">
+                        <button class="btn" type="submit">Enviar</button>
+                        <a href="mailto:info@fraymontour.cl" style="align-self:center;color:#9bbefb">info@fraymontour.cl</a>
+                    </div>
+                </form>
+
+                <div>
+                    <div style="font-weight:700">Nuestra oficina</div>
+                    <div style="color:#bfe0ff;font-size:14px;margin-bottom:8px">Santiago, Chile</div>
+                    <div class="map">
+                        <iframe title="Mapa FraymonTour" src="https://www.google.com/maps?q=Santiago,Chile&output=embed" style="width:100%;height:200px;border:0"></iframe>
+                    </div>
+                    <div style="margin-top:10px;font-size:13px;color:#9bbefb">Síguenos: 
+                        <a href="#" aria-label="Instagram">Instagram</a> · 
+                        <a href="#" aria-label="Facebook">Facebook</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="container" role="contentinfo">
+            <div>© <strong>FraymonTour</strong> Chile — Calidad y cercanía</div>
+            <div style="font-size:13px;color:#bfe0ff">Diseñado para viajeros curiosos</div>
+        </footer>
+    </main>
+
+    <script>
+        // Minimal interactivity: smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{
+            a.addEventListener('click', e=>{
+                const id = a.getAttribute('href').slice(1);
+                const el = document.getElementById(id);
+                if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); }
+            });
+        });
+    </script>
+    <!-- Registro: modal + script -->
+    <div id="register-modal" class="modal" aria-hidden="true">
+        <div class="modal-backdrop" id="register-backdrop"></div>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="register-title">
+            <button class="modal-close" id="register-close" aria-label="Cerrar">×</button>
+            <h3 id="register-title">Registrarse</h3>
+            <form id="register-form">
+                <label>Email
+                    <input id="reg-email" type="email" required placeholder="tu@correo.com">
+                </label>
+                <label>Contraseña
+                    <input id="reg-password" type="password" required placeholder="Contraseña">
+                </label>
+                <label>Repetir Contraseña
+                    <input id="reg-password2" type="password" required placeholder="Repetir contraseña">
+                </label>
+                <div class="form-row">
+                    <button class="btn" type="submit">Crear cuenta</button>
+                    <button class="btn" type="button" id="register-cancel">Cancelar</button>
+                </div>
+                <div id="reg-error" style="color:#ffb4b4;margin-top:8px;display:none"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="Js/register.js"></script>
+    <script src="Js/carousel.js"></script>
+</body>
+</html>
