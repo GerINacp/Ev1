@@ -28,14 +28,20 @@
             <a href="#galeria">Galería</a>
             <a href="#contacto">Contacto</a>
             <a class="btn" href="#contacto">Reservar</a>
-            <a class="btn" href="{% url 'registro' %}">Registrarse</a>
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-    {% csrf_token %}
-    <button type="submit" style="background: none; border: none; color: #ef4444; font-weight: bold; cursor: pointer; font-size: inherit;">
-        Cerrar Sesión
-    </button>
-</form>
-        </nav>
+            
+    <!-- Botón de Administración (Idealmente visible para staff o superusuarios) -->
+    {% if user.is_staff %}
+        <a class="btn" href="{% url 'admin:index' %}" target="_blank" style="background: #f97316;">Admin Tours</a>
+    {% endif %}
+
+    <a class="btn" href="{% url 'registro' %}">Registrarse</a>
+    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="background: none; border: none; color: #ef4444; font-weight: bold; cursor: pointer; font-size: inherit;">
+            Cerrar Sesión
+        </button>
+    </form>
+</nav>
     </header>
 
     <main class="container" role="main">
