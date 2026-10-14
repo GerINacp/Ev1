@@ -15,11 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from Tours import views 
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from Tours import views as tour_views  # O tu app correspondiente
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.inicio, name='index'),
-    path('registro/', views.registro, name='registro'), # <- Nueva ruta agregada
+    # Página de login por defecto al entrar a la web
+    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('registro/', tour_views.registro_view, name='registro'),
+
+    # Tu página principal protegida (FraymonTour)
+    path('inicio/', tour_views.index_view, name='home'),
 ]

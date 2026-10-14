@@ -8,14 +8,12 @@
     <meta name="description" content="FraymonTour Chile: experiencias turísticas únicas en Chile. Tours personalizados, aventura, cultura y naturaleza." />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
-    <link rel="icon" href="Images/FraymonTourLogo.ico.ico" type="image/svg+xml">
-    <link rel="shortcut icon" href="Images/FraymonTourLogo.ico.ico" type="image/svg+xml">
-    <a href="{% url 'registro' %}" class="...">Registrarse</a>
+    
 </head>
 <body>
     <header class="container" role="banner">
         <div class="brand">
-            <div class="logo"><img src="Images/FraymonTourLogo.ico.ico" alt="FraymonTour logo" width="44" height="44"></div>
+            <div class="logo" aria-label="FraymonTour logo">F</div>
             <div>
                 <div style="font-weight:700">FraymonTour</div>
                 <div style="font-size:12px;color:#9bbefb">Chile • Experiencias únicas</div>
@@ -30,7 +28,13 @@
             <a href="#galeria">Galería</a>
             <a href="#contacto">Contacto</a>
             <a class="btn" href="#contacto">Reservar</a>
-            <button id="open-register" class="btn" type="button">Registrarse</button>
+            <a class="btn" href="{% url 'registro' %}">Registrarse</a>
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" style="background: none; border: none; color: #ef4444; font-weight: bold; cursor: pointer; font-size: inherit;">
+        Cerrar Sesión
+    </button>
+</form>
         </nav>
     </header>
 
@@ -57,21 +61,21 @@
 
                 <div class="cards" aria-label="Tours destacados">
                     <div class="card">
-                        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60')" role="img" aria-label="Desierto de Atacama"></div>
+                        <div class="thumb" style="background-image:url('{% static 'Tours/images/atacama.jpg' %}')" role="img" aria-label="Desierto de Atacama"></div>
                         <div>
                             <div style="font-weight:700">Desierto de Atacama</div>
                             <div style="font-size:13px;color:#bfe0ff">Tours astronómicos y géiseres.</div>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60')" role="img" aria-label="Patagonia"></div>
+                        <div class="thumb" style="background-image:url('{% static 'Tours/images/glaciar.jpg' %}')" role="img" aria-label="Patagonia"></div>
                         <div>
                             <div style="font-weight:700">Patagonia</div>
                             <div style="font-size:13px;color:#bfe0ff">Trekking, glaciares y fauna.</div>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1549887534-6b4b9f1a9f3f?auto=format&fit=crop&w=800&q=60')" role="img" aria-label="Valparaíso"></div>
+                        <div class="thumb" style="background-image:url('{% static 'Tours/images/costera.jpg' %}')" role="img" aria-label="Valparaíso"></div>
                         <div>
                             <div style="font-weight:700">Costa & Valparaíso</div>
                             <div style="font-size:13px;color:#bfe0ff">Cultura, arquitectura y sabores.</div>
@@ -98,55 +102,52 @@
                 <button class="carousel-btn prev" aria-label="Anterior">‹</button>
                 <div class="carousel-track">
                     <div class="carousel-slide">
-                        <img src="Images/desierto_atacama.jpg" alt="Desierto de Atacama" loading="lazy">
+                        <img src="{% static 'Tours/images/atacama.jpg' %}" alt="Desierto de Atacama" loading="lazy">
                         <div class="carousel-caption"><strong>Desierto de Atacama</strong><p>Observación astronómica y géiseres.</p></div>
                     </div>
                     <div class="carousel-slide">
-                        <img src="Images/patagonia.jpg" alt="Patagonia" loading="lazy">
+                        <img src="{% static 'Tours/images/glaciar.jpg' %}" alt="Patagonia" loading="lazy">
                         <div class="carousel-caption"><strong>Patagonia</strong><p>Fiordos, glaciares y trekking.</p></div>
                     </div>
                     <div class="carousel-slide">
-                        <img src="Images/costa_valparaiso.jpg" alt="Costa y Valparaíso" loading="lazy">
+                        <img src="{% static 'Tours/images/costera.jpg' %}" alt="Costa y Valparaíso" loading="lazy">
                         <div class="carousel-caption"><strong>Costa & Valparaíso</strong><p>Colores y arquitectura frente al mar.</p></div>
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="Images/farellones.jpg" alt="Farellones" loading="lazy">
-                        <div class="carousel-caption"><strong>Farellones</strong><p>Actividades de montaña y nieve.</p></div>
-                    </div>
-                    <div class="carousel-slide">
-                        <img src="Images/valle_nevado.jpg" alt="Valle Nevado" loading="lazy">
-                        <div class="carousel-caption"><strong>Valle Nevado</strong><p>Estación de esquí con excelentes pistas.</p></div>
                     </div>
                 </div>
                 <button class="carousel-btn next" aria-label="Siguiente">›</button>
-                <div class="carousel-dots" aria-hidden="false"></div>
+                <div class="carousel-dots" aria-label="Indicadores del carrusel"></div>
             </div>
         </section>
 
-        <section id="tours" class="services" aria-labelledby="services-title">
-            <div class="service-card">
-                <h3 id="services-title" style="margin:0 0 8px 0">Tours Privados</h3>
-                <p style="margin:0 0 12px;color:#cfe8ff">Itinerarios hechos a tu medida con guía local y transporte.</p>
-                <ul style="margin:0 0 8px 18px;color:#bfe0ff">
-                    <li>Excursiones de un día</li>
-                    <li>Paquetes multi-día</li>
-                    <li>Tours fotográficos</li>
-                </ul>
-            </div>
+        <section id="tours" aria-labelledby="services-title">
+            <div class="services">
+                <div class="service-card">
+                    <h3 id="services-title" style="margin:0 0 8px 0">Tours Privados</h3>
+                    <p style="margin:0 0 12px;color:#cfe8ff">Itinerarios hechos a tu medida con guía local y transporte.</p>
+                    <ul style="margin:0 0 8px 18px;color:#bfe0ff">
+                        <li>Excursiones de un día</li>
+                        <li>Paquetes multi-día</li>
+                        <li>Tours fotográficos</li>
+                    </ul>
+                </div>
 
-            <div class="service-card">
-                <h3 style="margin:0 0 8px 0">Aventura & Naturaleza</h3>
-                <p style="margin:0 0 12px;color:#cfe8ff">Trekking, kayak, avistamiento y experiencias sostenibles.</p>
-                <div style="font-size:13px;color:#bfe0ff">Guías certificados • Seguro de viajes opcional</div>
+                <div class="service-card">
+                    <h3 style="margin:0 0 8px 0">Aventura & Naturaleza</h3>
+                    <p style="margin:0 0 12px;color:#cfe8ff">Trekking, kayak, avistamiento y experiencias sostenibles.</p>
+                    <div style="font-size:13px;color:#bfe0ff">Guías certificados • Seguro de viajes opcional</div>
+                </div>
             </div>
         </section>
 
-        <section id="galeria" aria-label="Galería" style="margin-top:20px">
-            <h3 style="margin:0 0 10px 0">Galería</h3>
-            <div class="gallery">
-                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60" alt="Paisaje Atacama">
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60" alt="Glaciar">
-                <img src="https://images.unsplash.com/photo-1549887534-6b4b9f1a9f3f?auto=format&fit=crop&w=800&q=60" alt="Ciudad costera">
+        <section id="galeria" aria-label="Galería" style="margin-top:20px; text-align:center;">
+            <h3 style="margin:0 0 10px 0; color: white;">Galería de Destinos</h3>
+
+            <div class="gallery" style="position: relative; max-width: 600px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 100%; height: 300px; overflow: hidden; border-radius: 12px; background: #0b1329; display: flex; gap: 8px;">
+                    <img class="gallery-slide" src="{% static 'Tours/images/atacama.jpg' %}" alt="Paisaje Atacama" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img class="gallery-slide" src="{% static 'Tours/images/glaciar.jpg' %}" alt="Glaciar" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img class="gallery-slide" src="{% static 'Tours/images/costera.jpg' %}" alt="Ciudad costera" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
             </div>
         </section>
 
@@ -219,7 +220,7 @@
         </div>
     </div>
 
-    <script src="Js/register.js"></script>
-    <script src="Js/carousel.js"></script>
+
+<script src="{% static 'Tours/carousel.js' %}"></script>
 </body>
 </html>

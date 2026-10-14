@@ -1,23 +1,19 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import RegistroForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
-
-# Create your views here.
-def inicio(request):
-    return render(request, 'Tours/index.html')
-
-
-def registro(request):
+# Vista de Registro
+def registro_view(request):
     if request.method == 'POST':
-        form = RegistroForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'¡Cuenta creada con éxito para {username}! Ya puedes iniciar sesión.')
-            return redirect('index')  # Te redirige a la página principal
+            return redirect('login')
     else:
-        form = RegistroForm()
-    
+        form = UserCreationForm()
     return render(request, 'Tours/registro.html', {'form': form})
+
+# Vista Principal (Protegida)
+@login_required(login_url='login')
+def index_view(request):
+    return render(request, 'Tours/index.html')
