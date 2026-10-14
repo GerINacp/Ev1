@@ -20,6 +20,6 @@ from Tours import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.inicio,name='index'),
-    
+    path('', views.inicio, name='index'),
+    path('registro/', views.registro, name='registro'), # <- Nueva ruta agregada
 ]
