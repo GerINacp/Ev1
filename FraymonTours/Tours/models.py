@@ -41,6 +41,30 @@ class Viajes(models.Model):
         verbose_name_plural = 'Tours'
 
 
+# 1. Agrega estos nuevos modelos arriba o antes de la clase Empleado
+class Cargo(models.Model):
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del Cargo")
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = "Cargo"
+        verbose_name_plural = "Cargos"
+
+
+class Departamento(models.Model):
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del Departamento")
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = "Departamento"
+        verbose_name_plural = "Departamentos"
+
+
+# 2. Modifica tu clase Empleado existente para que luzca así:
 class Empleado(models.Model):
     run = models.CharField(max_length=10, verbose_name='RUN')
     nombre = models.CharField(max_length=50, verbose_name='Nombre')
@@ -48,9 +72,12 @@ class Empleado(models.Model):
     materno = models.CharField(max_length=50, verbose_name='Apellido Materno')
     codigoEmpleado = models.CharField(max_length=20, verbose_name='Código de Empleado')
     sueldo = models.PositiveIntegerField(default=450000, verbose_name='Sueldo Base')
-    fechaNac = models.DateField(blank=True, null=True, verbose_name='Fecha de Nacimiento')
-    cargo = models.ForeignKey(Viajes, null=False, on_delete=models.RESTRICT, related_name='empleados_cargo')
-    departamento = models.ForeignKey(Viajes, null=True, on_delete=models.CASCADE, related_name='empleados_departamento')
+    fechaNac = models.DateField(null=True, blank=True, verbose_name='Fecha de Nacimiento')
+    
+    # ¡AQUÍ ESTÁ EL CAMBIO CLAVE! Ahora apuntan a sus modelos correctos en lugar de a 'Viajes'
+    cargo = models.ForeignKey(Cargo, null=False, on_delete=models.RESTRICT, related_name='empleados_cargo')
+    departamento = models.ForeignKey(Departamento, null=True, on_delete=models.CASCADE, related_name='empleados_departamento')
+    
     creado = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
