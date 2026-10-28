@@ -1,29 +1,46 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión - FraymonTour</title>
-    <style>
-        body { background-color: #0b1329; color: white; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-card { background: #121c38; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); width: 350px; text-align: center; }
-        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 6px; border: 1px solid #2d3b60; background: #0b1329; color: white; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        button:hover { background: #1d4ed8; }
-        a { color: #60a5fa; text-decoration: none; font-size: 14px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f3f2ed">
+    <title>Iniciar sesión | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
 </head>
-<body>
-    <div class="login-card">
-        <h2>FraymonTour</h2>
-        <p style="color: #94a3b8; font-size: 14px;">Inicia sesión para explorar</p>
-        
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Entrar</button>
-        </form>
-        
-        <p style="margin-top: 15px;">¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
-    </div>
+<body class="journey-page">
+    <header class="journey-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <a class="journey-back" href="{% url 'landing' %}">Volver al inicio <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="journey-layout journey-auth-layout">
+        <section class="journey-story">
+            <div class="landing-eyebrow"><span></span> Tu próxima historia</div>
+            <h1>Qué bueno<br>tenerte <em>de vuelta.</em></h1>
+            <p>Entra y continúa planeando momentos que se quedan contigo.</p>
+            <figure class="journey-photo"><img src="{% static 'Tours/images/costera.jpg' %}" alt="La costa de Viña del Mar al atardecer"><figcaption>33°01' S <span>VIÑA DEL MAR, CHILE</span></figcaption></figure>
+        </section>
+        <section class="journey-panel" aria-labelledby="login-title">
+            <div class="journey-panel-kicker">ACCESO A TU CUENTA</div>
+            <h2 id="login-title">Iniciar sesión</h2>
+            <p class="journey-panel-intro">Nos alegra volver a acompañarte.</p>
+            <form method="post" class="journey-form" novalidate>
+                {% csrf_token %}
+                {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+                {% if form.non_field_errors %}<div class="journey-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+                {% for field in form %}
+                    <div class="journey-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% for error in field.errors %}<span class="journey-field-error">{{ error }}</span>{% endfor %}
+                    </div>
+                {% endfor %}
+                <button class="journey-submit" type="submit">Entrar a mi cuenta <span aria-hidden="true">↗</span></button>
+            </form>
+            <div class="journey-switch"><span>¿Aún no tienes cuenta?</span><a class="journey-secondary-link" href="{% url 'registro' %}{% if next %}?next={{ next|urlencode }}{% endif %}">Crear una cuenta <span aria-hidden="true">→</span></a></div>
+            <div class="journey-note">Tus datos se usan únicamente para gestionar tu cuenta y tus viajes.</div>
+        </section>
+    </main>
+    <footer class="journey-footer"><span>FRAYMON TOURS</span><span>VIAJES QUE SE QUEDAN CONTIGO</span></footer>
 </body>
 </html>

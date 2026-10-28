@@ -1,53 +1,50 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - FraymonTours</title>
-    <!-- Incluyendo Tailwind CSS para un diseño moderno -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="theme-color" content="#f3f2ed">
+    <title>Crear cuenta | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
 </head>
-<body class="bg-gradient-to-br from-blue-900 to-indigo-800 min-h-screen flex items-center justify-center p-6">
-
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8 transform transition-all">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-extrabold text-gray-900">Crear Cuenta</h1>
-            <p class="text-sm text-gray-500 mt-2">Únete a FraymonTours y vive la mejor experiencia</p>
-        </div>
-
-        <!-- Mensajes de alerta -->
-        {% if messages %}
-            {% for message in messages %}
-                <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-
-        <form method="POST" class="space-y-5">
-            {% csrf_token %}
-            
-            {{ form.non_field_errors }}
-
-            {% for field in form %}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
-
-            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-0.5">
-                Registrarse
-            </button>
-        </form>
-
-        <div class="text-center mt-6">
-            <a href="{% url 'home' %}" class="text-sm text-blue-600 hover:underline">← Volver al inicio</a>
-        </div>
-    </div>
-
+<body class="journey-page">
+    <header class="journey-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <a class="journey-back" href="{% url 'landing' %}">Volver al inicio <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="journey-layout journey-register-layout">
+        <section class="journey-story">
+            <div class="landing-eyebrow"><span></span> Un viaje empieza aquí</div>
+            <h1>Haz espacio<br>para lo <em>nuevo.</em></h1>
+            <p>Crea tu cuenta para guardar tus datos y solicitar cotizaciones de nuestros destinos.</p>
+            <div class="journey-destination-strip">
+                <img src="{% static 'Tours/images/glaciar.jpg' %}" alt="Cordillera de los Andes">
+                <div><span>PRÓXIMA PARADA</span><strong>La cordillera te espera.</strong></div>
+            </div>
+        </section>
+        <section class="journey-panel" aria-labelledby="register-title">
+            <div class="journey-panel-kicker">ÚNETE A LA RUTA</div>
+            <h2 id="register-title">Crear cuenta</h2>
+            <p class="journey-panel-intro">Unos datos y ya estás más cerca.</p>
+            <form method="post" class="journey-form" novalidate>
+                {% csrf_token %}
+                {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+                {% for field in form %}
+                    <div class="journey-field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}<div class="journey-help">{{ field.help_text|safe }}</div>{% endif %}
+                        {% for error in field.errors %}<span class="journey-field-error">{{ error }}</span>{% endfor %}
+                    </div>
+                {% endfor %}
+                {% if form.non_field_errors %}<div class="journey-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+                <button class="journey-submit" type="submit">Crear cuenta y continuar <span aria-hidden="true">↗</span></button>
+            </form>
+            <div class="journey-switch"><span>¿Ya tienes una cuenta?</span><a class="journey-secondary-link" href="{% url 'login' %}{% if next %}?next={{ next|urlencode }}{% endif %}">Iniciar sesión <span aria-hidden="true">→</span></a></div>
+            <div class="journey-note">Al registrarte podrás cotizar sin perder el hilo de tu viaje.</div>
+        </section>
+    </main>
+    <footer class="journey-footer"><span>FRAYMON TOURS</span><span>VIAJES QUE SE QUEDAN CONTIGO</span></footer>
 </body>
 </html>

@@ -1,0 +1,32 @@
+[
+  {
+    "model": "Tours.viajes",
+    "pk": 1,
+    "fields": {
+      "nombre": "Viña del Mar",
+      "descripcion": "Disfruta del mar, la arquitectura histórica y la hermosa costa de la Región de Valparaíso.",
+      "imagen": "tours/costera.jpg",
+      "creado": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "Tours.viajes",
+    "pk": 2,
+    "fields": {
+      "nombre": "Farellones & Valle Nevado",
+      "descripcion": "Vive la experiencia de la cordillera, nieve, deportes de invierno y vistas inolvidables.",
+      "imagen": "tours/glaciar.jpg",
+      "creado": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "Tours.viajes",
+    "pk": 3,
+    "fields": {
+      "nombre": "City Tour",
+      "descripcion": "Recorridos guiados por los puntos históricos y culturales más icónicos de la ciudad.",
+      "imagen": "tours/atacama.jpg",
+      "creado": "2026-01-01T00:00:00Z"
+    }
+  }
+]

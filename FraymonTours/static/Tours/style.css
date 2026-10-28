@@ -75,3 +75,252 @@
             .carousel-slide img{height:220px}
             .carousel-btn{width:34px;height:40px}
         }
+
+        /* Fraymon Tours single-page landing */
+        body.landing-page{min-height:100%;margin:0;background:#f3f2ed;color:#242623;font-family:"Trebuchet MS","Segoe UI",sans-serif;line-height:1.55}
+        .landing-page a{color:inherit;text-decoration:none}
+        .landing-page img{display:block;width:100%;height:100%;object-fit:cover}
+        .landing-header,.landing-footer{width:min(1320px,calc(100% - 96px));margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .landing-header{height:88px;border-bottom:1px solid #d9d8d1}
+        .landing-brand{display:inline-flex;align-items:center;gap:11px;font-size:12px;font-weight:700;letter-spacing:1.5px}
+        .landing-brand-mark{width:30px;height:30px;display:grid;place-items:center;background:#282a27;color:#f3f2ed;font-family:Georgia,serif;font-size:19px;font-weight:400;letter-spacing:0}
+        .landing-brand-light{font-weight:400;color:#777970}
+        .landing-nav{display:flex;gap:38px;font-size:12px;color:#66685f}
+        .landing-nav a,.landing-login,.landing-footer a{transition:color .2s ease}
+        .landing-nav a:hover,.landing-login:hover,.landing-footer a:hover{color:#bd5d3d}
+        .landing-login{font-size:12px;font-weight:700}
+        .landing-login span{margin-left:8px;color:#bd5d3d}
+        .landing-hero{position:relative;width:min(1320px,calc(100% - 96px));min-height:650px;margin:0 auto;padding:68px 0 84px;display:grid;grid-template-columns:.92fr 1.08fr;align-items:center;gap:30px}
+        .landing-hero-copy{position:relative;z-index:1;padding:20px 0 0 7.5%}
+        .landing-eyebrow{display:flex;align-items:center;gap:10px;color:#73756d;font-size:10px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase}
+        .landing-eyebrow>span{width:23px;height:1px;background:#bd5d3d}
+        .landing-hero h1,.landing-section-heading h2,.landing-philosophy h2,.landing-finale h2{margin:27px 0 18px;font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:0;line-height:.98}
+        .landing-hero h1{font-size:76px}
+        .landing-hero h1 em,.landing-philosophy h2 em,.landing-finale h2 em{color:#bd5d3d;font-weight:400}
+        .landing-intro{max-width:360px;margin:25px 0;color:#66685f;font-size:15px;line-height:1.8}
+        .landing-primary-link{display:inline-flex;align-items:center;gap:25px;margin-top:12px;padding:13px 0;border-bottom:1px solid #242623;font-size:12px;font-weight:700}
+        .landing-primary-link span{color:#bd5d3d;font-size:17px;transition:transform .2s ease}
+        .landing-primary-link:hover span{transform:translateY(3px)}
+        .landing-hero-index{display:flex;align-items:center;gap:11px;margin-top:67px;color:#8a8b83;font-size:9px;letter-spacing:1.2px}
+        .landing-hero-index>span{color:#242623;font-weight:700}
+        .landing-hero-index i{width:32px;height:1px;margin:0 3px;background:#c9c8c0}
+        .landing-hero-image{position:relative;height:490px;margin:0;overflow:hidden;background:#d7d4cb}
+        .landing-hero-image img{animation:landing-reveal .9s ease both}
+        .landing-hero-image figcaption{position:absolute;right:0;bottom:0;left:0;display:flex;justify-content:space-between;padding:18px 20px;background:linear-gradient(transparent,rgba(18,21,19,.58));color:#fff;font-size:9px;letter-spacing:1.2px}
+        .landing-hero-image figcaption span:first-child{font-family:Georgia,serif;font-size:13px;letter-spacing:0}
+        .landing-side-note{position:absolute;right:-20px;top:50%;writing-mode:vertical-rl;color:#9a9b92;font-size:8px;letter-spacing:2px}
+        .landing-destinations{padding:105px max(48px,calc((100% - 1230px)/2)) 116px;background:#e8e7e1}
+        .landing-section-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:44px}
+        .landing-section-heading h2{margin:19px 0 0;font-size:49px}
+        .landing-count{display:flex;align-items:center;gap:13px;color:#777970;font-size:9px;letter-spacing:1.2px}
+        .landing-count b{color:#bd5d3d;font-family:Georgia,serif;font-size:21px;font-weight:400;letter-spacing:0}
+        .landing-tour-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+        .landing-tour-card{min-width:0;animation:landing-rise .65s ease both}
+        .landing-tour-card:nth-child(2){animation-delay:.1s}
+        .landing-tour-card:nth-child(3){animation-delay:.2s}
+        .landing-tour-image{position:relative;display:block;height:260px;overflow:hidden;background:#cfcec6}
+        .landing-tour-image img{transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+        .landing-tour-image:hover img{transform:scale(1.035)}
+        .landing-image-arrow{position:absolute;right:12px;bottom:12px;width:34px;height:34px;display:grid;place-items:center;background:#f3f2ed;color:#242623;font-size:16px;transition:background .2s ease,color .2s ease}
+        .landing-tour-image:hover .landing-image-arrow{background:#bd5d3d;color:#fff}
+        .landing-tour-meta{display:flex;justify-content:space-between;margin-top:20px;color:#85867d;font-size:9px;font-weight:700;letter-spacing:1.3px}
+        .landing-tour-meta span:last-child{color:#bd5d3d}
+        .landing-tour-card h3{margin:8px 0;font-family:Georgia,"Times New Roman",serif;font-size:26px;font-weight:400;line-height:1.15}
+        .landing-tour-description{min-height:48px;color:#6d6f67;font-size:12px;line-height:1.7}
+        .landing-tour-link{display:inline-flex;align-items:center;gap:16px;margin-top:17px;padding-bottom:7px;border-bottom:1px solid #b9b8b0;font-size:10px;font-weight:700}
+        .landing-tour-link span{color:#bd5d3d;font-size:15px;transition:transform .2s ease}
+        .landing-tour-link:hover span{transform:translateX(4px)}
+        .landing-empty-state{grid-column:1/-1;padding:48px 0;color:#66685f;font-family:Georgia,serif;font-size:24px}
+        .landing-philosophy{position:relative;display:grid;grid-template-columns:.6fr 1.2fr .6fr;align-items:center;gap:30px;padding:112px max(48px,calc((100% - 1230px)/2));background:#292c28;color:#f3f2ed;overflow:hidden}
+        .landing-philosophy-mark{align-self:start;color:#85877e;font-family:Georgia,serif;font-size:15px}
+        .landing-philosophy-content{max-width:650px}
+        .landing-philosophy .landing-eyebrow{color:#b4b5ac}
+        .landing-philosophy h2{margin:22px 0 19px;font-size:54px}
+        .landing-philosophy h2 em{color:#e18a67}
+        .landing-philosophy-content p,.landing-finale-content p{margin:0;color:#c1c2b9;font-size:13px;line-height:1.9}
+        .landing-philosophy-aside{display:flex;flex-direction:column;gap:5px;align-self:end;color:#a6a79e;font-size:8px;letter-spacing:1.5px}
+        .landing-finale{position:relative;min-height:500px;display:flex;align-items:center;justify-content:center;padding:90px 48px;background:#e8e7e1;text-align:center;overflow:hidden}
+        .landing-finale-content{max-width:650px}
+        .landing-finale .landing-eyebrow{justify-content:center}
+        .landing-finale h2{margin:22px 0;font-size:58px}
+        .landing-finale-content p{color:#66685f}
+        .landing-cta{display:inline-flex;align-items:center;gap:35px;margin-top:27px;padding:15px 20px;background:#bd5d3d;color:#fff!important;font-size:11px;font-weight:700;transition:background .2s ease,transform .2s ease}
+        .landing-cta:hover{background:#99472e;transform:translateY(-2px)}
+        .landing-cta span{font-size:16px}
+        .landing-finale-stamp{position:absolute;right:8%;bottom:52px;display:flex;align-items:center;gap:10px;color:#777970}
+        .landing-finale-stamp>span{font-family:Georgia,serif;font-size:42px}
+        .landing-finale-stamp small{font-size:8px;letter-spacing:1px;line-height:1.5}
+        .landing-footer{min-height:95px;color:#777970;font-size:9px;letter-spacing:1.1px}
+        .landing-footer>.landing-brand{color:#242623;font-size:10px}
+        .landing-footer>a:last-child{font-size:10px;font-weight:700;letter-spacing:0}
+        .landing-footer>a:last-child span{margin-left:8px;color:#bd5d3d}
+        @keyframes landing-reveal{from{opacity:.5;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}
+        @keyframes landing-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        @media (max-width:900px){
+            .landing-header,.landing-footer{width:calc(100% - 48px)}
+            .landing-hero{width:calc(100% - 48px);min-height:570px;grid-template-columns:.9fr 1.1fr;gap:12px}
+            .landing-hero-copy{padding-left:0}
+            .landing-hero h1{font-size:58px}
+            .landing-hero-image{height:410px}
+            .landing-side-note{display:none}
+            .landing-destinations,.landing-philosophy{padding-right:32px;padding-left:32px}
+            .landing-tour-grid{gap:16px}
+            .landing-tour-image{height:210px}
+            .landing-philosophy{grid-template-columns:60px 1fr}
+            .landing-philosophy-aside{grid-column:2;flex-direction:row}
+        }
+        @media (max-width:620px){
+            .landing-header{width:calc(100% - 36px);height:70px}
+            .landing-nav{display:none}
+            .landing-brand{font-size:10px}
+            .landing-login{font-size:11px}
+            .landing-hero{width:calc(100% - 36px);display:flex;flex-direction:column;align-items:stretch;gap:35px;padding:54px 0 67px}
+            .landing-hero-copy{padding:0}
+            .landing-hero h1{margin-top:22px;font-size:55px}
+            .landing-intro{max-width:330px;font-size:14px}
+            .landing-hero-index{margin-top:34px}
+            .landing-hero-image{height:310px}
+            .landing-destinations{padding:72px 18px 78px}
+            .landing-section-heading{align-items:start;gap:14px;margin-bottom:30px}
+            .landing-section-heading h2{font-size:37px}
+            .landing-count{max-width:95px;align-items:start;flex-direction:column;gap:2px;text-align:right;font-size:8px}
+            .landing-tour-grid{grid-template-columns:1fr;gap:39px}
+            .landing-tour-image{height:280px}
+            .landing-tour-description{min-height:0}
+            .landing-philosophy{grid-template-columns:1fr;gap:20px;padding:68px 24px}
+            .landing-philosophy-mark{display:none}
+            .landing-philosophy h2{font-size:46px}
+            .landing-philosophy-aside{grid-column:auto}
+            .landing-finale{min-height:470px;padding:72px 24px}
+            .landing-finale h2{font-size:47px}
+            .landing-finale-stamp{right:22px;bottom:15px}
+            .landing-footer{width:calc(100% - 36px);min-height:84px;gap:14px}
+            .landing-footer>span{display:none}
+        }
+        @media (prefers-reduced-motion:reduce){
+            .landing-page *, .landing-page *::before, .landing-page *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+        }
+
+        /* Shared account and quote pages */
+        body.journey-page{min-height:100vh;margin:0;background:#f3f2ed;color:#242623;font-family:"Trebuchet MS","Segoe UI",sans-serif;line-height:1.55}
+        .journey-page a{color:inherit;text-decoration:none}
+        .journey-page img{display:block;width:100%;height:100%;object-fit:cover}
+        .journey-header,.journey-footer{width:min(1180px,calc(100% - 72px));margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .journey-header{height:82px;border-bottom:1px solid #d9d8d1}
+        .journey-back{color:#66685f;font-size:11px}
+        .journey-back span{margin-left:7px;color:#bd5d3d}
+        .journey-layout{width:min(1100px,calc(100% - 72px));min-height:calc(100vh - 150px);margin:0 auto;padding:56px 0 64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(350px,440px);align-items:center;gap:clamp(42px,8vw,112px)}
+        .journey-story{max-width:560px}
+        .journey-story h1{margin:23px 0 18px;font-family:Georgia,"Times New Roman",serif;font-size:64px;font-weight:400;letter-spacing:0;line-height:1.02}
+        .journey-story h1 em{color:#bd5d3d;font-weight:400}
+        .journey-story>p{max-width:410px;margin:0 0 27px;color:#66685f;font-size:14px;line-height:1.85}
+        .journey-story>p strong{color:#242623}
+        .journey-photo{position:relative;height:265px;margin:31px 0 0;overflow:hidden;background:#d7d4cb}
+        .journey-photo img{transition:transform .6s ease}
+        .journey-photo:hover img{transform:scale(1.025)}
+        .journey-photo figcaption{position:absolute;right:0;bottom:0;left:0;display:flex;justify-content:space-between;padding:15px 17px;background:linear-gradient(transparent,rgba(18,21,19,.58));color:#fff;font-size:9px;letter-spacing:1.2px}
+        .journey-panel{padding:34px;background:#f9f8f4;border:1px solid #e0dfd8}
+        .journey-panel-kicker{color:#85867d;font-size:9px;font-weight:700;letter-spacing:1.6px}
+        .journey-panel h2{margin:10px 0 5px;font-family:Georgia,"Times New Roman",serif;font-size:33px;font-weight:400;letter-spacing:0;line-height:1.15}
+        .journey-panel-intro{margin:0 0 24px;color:#777970;font-size:12px}
+        .journey-form{display:grid;gap:15px}
+        .journey-field{min-width:0;display:grid;gap:6px}
+        .journey-field label{color:#55574f;font-size:10px;font-weight:700;letter-spacing:.3px}
+        .journey-page .journey-input{width:100%;min-height:45px;padding:11px 12px;border:1px solid #d8d7cf;border-radius:0;background:#fff;color:#242623;font:inherit;font-size:12px;box-sizing:border-box;outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+        .journey-page .journey-input:focus{border-color:#bd5d3d;box-shadow:0 0 0 3px rgba(189,93,61,.12)}
+        .journey-page .journey-input::placeholder{color:#9a9b92}
+        .journey-field-error,.journey-errors{color:#a4402b;font-size:11px;line-height:1.5}
+        .journey-errors{margin-bottom:2px;padding:10px 12px;border-left:2px solid #bd5d3d;background:#f3e8e2}
+        .journey-help{color:#777970;font-size:10px;line-height:1.6}
+        .journey-help ul{margin:5px 0 0;padding-left:16px}
+        .journey-help li+li{margin-top:3px}
+        .journey-submit{width:100%;min-height:48px;margin-top:3px;padding:12px 15px;border:0;background:#bd5d3d;color:#fff!important;display:flex;align-items:center;justify-content:space-between;font:inherit;font-size:11px;font-weight:700;cursor:pointer;transition:background .2s ease,transform .2s ease}
+        .journey-submit:hover{background:#99472e;transform:translateY(-1px)}
+        .journey-submit span{font-size:16px}
+        .journey-switch{margin-top:21px;color:#777970;font-size:11px}
+        .journey-secondary-link{min-height:42px;margin-top:10px;padding:10px 12px;border:1px solid #d8d7cf;display:flex;align-items:center;justify-content:space-between;color:#a94e34!important;font-size:11px;font-weight:700;transition:border-color .2s ease,background .2s ease}
+        .journey-secondary-link:hover{border-color:#bd5d3d;background:#f3f2ed}
+        .journey-secondary-link span{font-size:15px}
+        .journey-note{margin-top:21px;padding-top:14px;border-top:1px solid #e0dfd8;color:#8a8b83;font-size:9px;line-height:1.7}
+        .journey-destination-strip{height:86px;margin-top:35px;display:flex;align-items:center;gap:17px;background:#e8e7e1}
+        .journey-destination-strip img{width:118px;height:86px;object-fit:cover}
+        .journey-destination-strip div{display:grid;gap:5px}
+        .journey-destination-strip span,.journey-price-note{color:#85867d;font-size:8px;font-weight:700;letter-spacing:1.1px}
+        .journey-destination-strip strong{font-family:Georgia,"Times New Roman",serif;font-size:16px;font-weight:400}
+        .journey-quote-layout{grid-template-columns:minmax(0,1fr) minmax(400px,500px);gap:clamp(38px,6vw,82px)}
+        .journey-quote-panel{padding:30px}
+        .journey-quote-panel .journey-form{grid-template-columns:1fr 1fr;gap:14px 12px}
+        .journey-quote-panel .journey-field:not(.journey-field-half),.journey-quote-panel .journey-form .journey-submit,.journey-quote-panel .journey-errors{grid-column:1/-1}
+        .journey-quote-panel .journey-field-half{grid-column:span 1}
+        .journey-price-note{margin-top:15px;font-weight:400;letter-spacing:.3px}
+        .journey-confirmation{display:flex;align-items:center;gap:13px;margin:30px 0 18px;padding:18px;background:#e8e7e1}
+        .journey-confirmation>span{width:30px;height:30px;display:grid;place-items:center;background:#bd5d3d;color:#fff}
+        .journey-confirmation div{display:grid;gap:3px}
+        .journey-confirmation strong{font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:400}
+        .journey-confirmation small{color:#777970;font-size:10px}
+        .journey-return{max-width:240px}
+        .journey-footer{min-height:66px;color:#85867d;font-size:8px;letter-spacing:1.1px}
+        @media (max-width:760px){
+            .journey-header,.journey-footer{width:calc(100% - 40px)}
+            .journey-layout,.journey-quote-layout{width:calc(100% - 40px);min-height:0;padding:40px 0 50px;grid-template-columns:1fr;gap:30px}
+            .journey-story{max-width:none}
+            .journey-story h1{font-size:53px}
+            .journey-story>p{max-width:520px}
+            .journey-photo{height:220px;margin-top:22px}
+            .journey-destination-strip{margin-top:22px}
+            .journey-panel,.journey-quote-panel{width:100%;padding:26px;box-sizing:border-box}
+            .journey-footer{min-height:58px}
+        }
+        @media (max-width:430px){
+            .journey-header,.journey-footer{width:calc(100% - 32px)}
+            .journey-layout,.journey-quote-layout{width:calc(100% - 32px);padding-top:30px}
+            .journey-story h1{font-size:45px}
+            .journey-panel,.journey-quote-panel{padding:21px}
+            .journey-quote-panel .journey-form{grid-template-columns:1fr}
+            .journey-quote-panel .journey-field-half{grid-column:1/-1}
+            .journey-footer span:last-child{display:none}
+        }
+
+        .tour-carousel-section{width:100%;margin:0;padding:85px max(48px,calc((100% - 1230px)/2)) 96px;background:#e8e7e1}
+        .tour-carousel-heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:26px}
+        .tour-carousel-heading h2{margin:17px 0 0;font-family:Georgia,"Times New Roman",serif;font-size:43px;font-weight:400;letter-spacing:0;line-height:1.05}
+        .tour-carousel-count{display:flex;align-items:center;gap:12px;color:#777970;font-size:10px;letter-spacing:1px}
+        .tour-carousel-count i{width:26px;height:1px;background:#bd5d3d}
+        .tour-carousel{height:430px;padding:0;border:1px solid #d7c8bb;border-radius:0;background:#e8e7e1;box-shadow:0 12px 28px rgba(39,42,36,.1)}
+        .tour-carousel .carousel-track{height:100%}
+        .tour-carousel .carousel-slide{height:100%;border-radius:0}
+        .tour-carousel .carousel-slide img{height:100%;object-fit:cover;filter:saturate(.84) brightness(1.04)}
+        .tour-carousel .carousel-caption{left:0;right:0;bottom:0;min-height:180px;padding:76px 70px 32px;border-radius:0;background:linear-gradient(180deg,rgba(44,40,34,0),rgba(39,42,36,.9));display:flex;align-items:end;justify-content:space-between;gap:24px}
+        .tour-carousel .carousel-caption-copy>span{color:#f0b29b;font-size:9px;font-weight:700;letter-spacing:1.5px}
+        .tour-carousel .carousel-caption h3{margin:8px 0 4px;color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:35px;font-weight:400;letter-spacing:0;line-height:1.1}
+        .tour-carousel .carousel-caption-copy>div{color:#e2e1da;font-size:12px}
+        .tour-carousel .carousel-caption>a{flex-shrink:0;padding:12px 15px;border:1px solid #d27b5d;background:#bd5d3d;color:#fff;font-size:10px;font-weight:700;transition:background .2s ease,border-color .2s ease}
+        .tour-carousel .carousel-caption>a:hover{border-color:#99472e;background:#99472e}
+        .tour-carousel .carousel-caption>a span{margin-left:10px;color:#f6ddd1;font-size:15px}
+        .tour-carousel .carousel-btn{width:42px;height:48px;border:1px solid rgba(243,242,237,.75);border-radius:0;background:rgba(39,42,36,.68);color:#f3f2ed;font-size:30px;font-weight:300;transition:background .2s ease,border-color .2s ease}
+        .tour-carousel .carousel-btn:hover{border-color:#bd5d3d;background:#bd5d3d}
+        .tour-carousel .carousel-btn.prev{left:16px}
+        .tour-carousel .carousel-btn.next{right:16px}
+        .tour-carousel :focus-visible{outline:2px solid #bd5d3d;outline-offset:3px}
+        .tour-carousel-section .carousel-dots{gap:7px;margin-top:16px}
+        .tour-carousel-section .carousel-dots button{width:24px;height:3px;border-radius:0;background:#c7c2b8}
+        .tour-carousel-section .carousel-dots button.active{background:#bd5d3d}
+        @media (max-width:900px){
+            .tour-carousel-section{padding:70px 32px}
+            .tour-carousel{height:360px}
+            .tour-carousel .carousel-caption{padding:70px 55px 28px}
+        }
+        @media (max-width:620px){
+            .tour-carousel-section{padding:62px 18px 70px}
+            .tour-carousel-heading{align-items:start}
+            .tour-carousel-heading h2{max-width:270px;font-size:35px}
+            .tour-carousel-count{padding-top:8px}
+            .tour-carousel{height:360px}
+            .tour-carousel .carousel-caption{min-height:210px;padding:86px 18px 22px;align-items:start;flex-direction:column;justify-content:end;gap:14px}
+            .tour-carousel .carousel-caption h3{font-size:29px}
+            .tour-carousel .carousel-caption-copy>div{max-width:260px;font-size:11px}
+            .tour-carousel .carousel-caption>a{padding:10px 12px}
+            .tour-carousel .carousel-btn{width:34px;height:40px}
+            .tour-carousel .carousel-btn.prev{left:10px}
+            .tour-carousel .carousel-btn.next{right:10px}
+        }

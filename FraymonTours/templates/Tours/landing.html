@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f3f2ed">
+    <title>Fraymon Tours | Chile, a tu manera</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="landing-page">
+    <header class="landing-header">
+        <a class="landing-brand" href="#inicio" aria-label="Fraymon Tours, inicio">
+            <span class="landing-brand-mark" aria-hidden="true">F</span>
+            <span>FRAYMON <span class="landing-brand-light">TOURS</span></span>
+        </a>
+        <nav class="landing-nav" aria-label="Navegación principal">
+            <a href="#viajes">Viajes</a>
+            <a href="#filosofia">La experiencia</a>
+        </nav>
+        <a class="landing-login" href="{% url 'login' %}">Iniciar sesión <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+        <section class="landing-hero" id="inicio" aria-labelledby="hero-title">
+            <div class="landing-hero-copy">
+                <div class="landing-eyebrow"><span></span> Chile, sin apuro</div>
+                <h1 id="hero-title">Hay lugares<br>que se <em>quedan.</em></h1>
+                <p class="landing-intro">El estilo monocromático, elegido al azar, inspira una página de destino única: una galería viva de Chile, serena y envolvente. La jerarquía guía la mirada desde la primera impresión hasta cada ruta; los paisajes aportan acentos de color para intensificar la emoción sin romper la unidad del recorrido.</p>
+                <a class="landing-primary-link" href="#viajes">Explorar destinos <span aria-hidden="true">↓</span></a>
+                <div class="landing-hero-index"><span>01</span> / 03 <i></i> UNA FORMA DE VIAJAR</div>
+            </div>
+            <figure class="landing-hero-image">
+                <img src="{% static 'Tours/images/costera.jpg' %}" alt="Costa chilena bajo la luz de la tarde">
+                <figcaption><span>33°01' S</span><span>EL PACÍFICO, DE CERCA</span></figcaption>
+            </figure>
+            <div class="landing-side-note" aria-hidden="true">DESCUBRE CHILE · A TU RITMO · DESCUBRE CHILE</div>
+        </section>
+
+        <section class="tour-carousel-section" aria-labelledby="carousel-title">
+            <div class="tour-carousel-heading">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Chile en tres paisajes</div>
+                    <h2 id="carousel-title">Una ruta puede cambiarlo todo.</h2>
+                </div>
+                <span class="tour-carousel-count">01 <i></i> 03</span>
+            </div>
+            <div class="carousel tour-carousel" id="carousel" role="region" aria-roledescription="carrusel" aria-label="Paisajes de nuestros tours">
+                <div class="carousel-track">
+                    <div class="carousel-slide" aria-hidden="false">
+                        <img src="{% static 'Tours/images/costera.jpg' %}" alt="Costa de Viña del Mar y el océano Pacífico">
+                        <div class="carousel-caption">
+                            <div class="carousel-caption-copy">
+                                <span>01 · COSTA PACÍFICA</span>
+                                <h3>Viña del Mar</h3>
+                                <div>El mar, la ciudad y una tarde que invita a quedarse.</div>
+                            </div>
+                            <a href="{% url 'cotizar' %}?tour=vina_del_mar">Cotizar este tour <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" aria-hidden="true">
+                        <img src="{% static 'Tours/images/glaciar.jpg' %}" alt="Cordillera nevada en Farellones y Valle Nevado">
+                        <div class="carousel-caption">
+                            <div class="carousel-caption-copy">
+                                <span>02 · CORDILLERA ANDINA</span>
+                                <h3>Farellones &amp; Valle Nevado</h3>
+                                <div>Aire de montaña, nieve y horizonte abierto.</div>
+                            </div>
+                            <a href="{% url 'cotizar' %}?tour=farellones">Cotizar este tour <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" aria-hidden="true">
+                        <img src="{% static 'Tours/images/atacama.jpg' %}" alt="Paisaje árido y cielo amplio del norte de Chile">
+                        <div class="carousel-caption">
+                            <div class="carousel-caption-copy">
+                                <span>03 · NORTE DE CHILE</span>
+                                <h3>City Tour</h3>
+                                <div>Historias, calles y rincones que cuentan la ciudad.</div>
+                            </div>
+                            <a href="{% url 'cotizar' %}?tour=city_tour">Cotizar este tour <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" type="button" aria-label="Imagen anterior"><span aria-hidden="true">‹</span></button>
+                <button class="carousel-btn next" type="button" aria-label="Imagen siguiente"><span aria-hidden="true">›</span></button>
+                <div class="carousel-dots" aria-label="Elegir paisaje"></div>
+            </div>
+        </section>
+
+        <section class="landing-destinations" id="viajes" aria-labelledby="destinations-title">
+            <div class="landing-section-heading">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Elige tu próximo paisaje</div>
+                    <h2 id="destinations-title">Chile tiene otro ritmo.</h2>
+                </div>
+                <span class="landing-count">RUTAS SELECCIONADAS <b>0{{ tours|length }}</b></span>
+            </div>
+
+            <div class="landing-tour-grid">
+                {% for tour in tours %}
+                    <article class="landing-tour-card">
+                        {% if tour.nombre == "Viña del Mar" %}
+                            <a class="landing-tour-image" href="{% url 'cotizar' %}?tour=vina_del_mar" aria-label="Cotizar {{ tour.nombre }}">
+                        {% elif tour.nombre == "Farellones & Valle Nevado" %}
+                            <a class="landing-tour-image" href="{% url 'cotizar' %}?tour=farellones" aria-label="Cotizar {{ tour.nombre }}">
+                        {% else %}
+                            <a class="landing-tour-image" href="{% url 'cotizar' %}?tour=city_tour" aria-label="Cotizar {{ tour.nombre }}">
+                        {% endif %}
+                            {% if tour.nombre == "Viña del Mar" %}
+                                {% static 'Tours/images/costera.jpg' as fallback_image %}
+                            {% elif tour.nombre == "Farellones & Valle Nevado" %}
+                                {% static 'Tours/images/glaciar.jpg' as fallback_image %}
+                            {% else %}
+                                {% static 'Tours/images/atacama.jpg' as fallback_image %}
+                            {% endif %}
+                            {% if tour.imagen %}
+                                <img src="{{ tour.imagen.url }}" data-fallback-src="{{ fallback_image }}" onerror="this.onerror=null;this.src=this.dataset.fallbackSrc" alt="Paisaje de {{ tour.nombre }}">
+                            {% else %}
+                                <img src="{{ fallback_image }}" alt="Paisaje de {{ tour.nombre }}">
+                            {% endif %}
+                            <span class="landing-image-arrow" aria-hidden="true">↗</span>
+                        </a>
+                        <div class="landing-tour-meta"><span>DESTINO CHILE</span><span>0{{ forloop.counter }}</span></div>
+                        <h3>{{ tour.nombre }}</h3>
+                        <div class="landing-tour-description">{{ tour.descripcion|default:"Un recorrido para descubrir el paisaje a tu propio ritmo." }}</div>
+                        {% if tour.nombre == "Viña del Mar" %}
+                            <a class="landing-tour-link" href="{% url 'cotizar' %}?tour=vina_del_mar">Cotizar este tour <span aria-hidden="true">→</span></a>
+                        {% elif tour.nombre == "Farellones & Valle Nevado" %}
+                            <a class="landing-tour-link" href="{% url 'cotizar' %}?tour=farellones">Cotizar este tour <span aria-hidden="true">→</span></a>
+                        {% else %}
+                            <a class="landing-tour-link" href="{% url 'cotizar' %}?tour=city_tour">Cotizar este tour <span aria-hidden="true">→</span></a>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <div class="landing-empty-state">Estamos preparando nuevas rutas. Vuelve pronto para descubrirlas.</div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="landing-philosophy" id="filosofia" aria-labelledby="philosophy-title">
+            <div class="landing-philosophy-mark" aria-hidden="true">02</div>
+            <div class="landing-philosophy-content">
+                <div class="landing-eyebrow"><span></span> Una pausa en el camino</div>
+                <h2 id="philosophy-title">Menos itinerario.<br><em>Más presencia.</em></h2>
+                <p>La tipografía se siente cálida y segura; las interacciones, suaves y precisas, dejan espacio para mirar. En una sola experiencia de desplazamiento, la bienvenida despierta curiosidad, los destinos convierten esa emoción en deseo y la llamada final invita a dar el siguiente paso sin interrumpir la calma.</p>
+            </div>
+            <div class="landing-philosophy-aside"><span>DISEÑADO PARA MIRAR</span><span>Y SENTIR EL LUGAR</span></div>
+        </section>
+
+        <section class="landing-finale" aria-labelledby="finale-title">
+            <div class="landing-finale-content">
+                <div class="landing-eyebrow"><span></span> El siguiente recuerdo empieza aquí</div>
+                <h2 id="finale-title">Sal de la rutina.<br><em>Entra en Chile.</em></h2>
+                <p>La calma de una galería abierta, las líneas honestas de la arquitectura moderna y el cuidado de un mapa hecho a mano inspiran esta experiencia: sobria, cálida y refinada, con espacio para que cada destino sea el protagonista.</p>
+                <a class="landing-cta" href="{% url 'cotizar' %}">Planear mi viaje <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="landing-finale-stamp" aria-hidden="true"><span>F</span><small>FRAYMON<br>TOURS · CHILE</small></div>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <a class="landing-brand" href="#inicio"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <span>VIAJES QUE SE QUEDAN CONTIGO</span>
+        <a href="{% url 'registro' %}">Únete a la ruta <span aria-hidden="true">↗</span></a>
+    </footer>
+    <script src="{% static 'Tours/carousel.js' %}" defer></script>
+</body>
+</html>

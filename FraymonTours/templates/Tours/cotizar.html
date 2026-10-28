@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f3f2ed">
+    <title>Cotiza tu viaje | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="journey-page">
+    <header class="journey-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <a class="journey-back" href="{% url 'landing' %}#viajes">Volver a los destinos <span aria-hidden="true">↗</span></a>
+    </header>
+    <main class="journey-layout journey-quote-layout">
+        <section class="journey-story journey-quote-story">
+            <div class="landing-eyebrow"><span></span> El siguiente recuerdo empieza aquí</div>
+            {% if messages %}
+                <h1>Tu viaje ya<br>está <em>en marcha.</em></h1>
+                {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+                <div class="journey-confirmation"><span aria-hidden="true">✓</span><div><strong>Solicitud recibida</strong><small>Esto es una cotización, no una reserva pagada.</small></div></div>
+                <a class="journey-submit journey-return" href="{% url 'landing' %}">Volver a explorar <span aria-hidden="true">↗</span></a>
+            {% else %}
+                <h1>Elige tu ruta.<br>Nosotros te <em>orientamos.</em></h1>
+                <p>Cuéntanos qué destino te llama y cuándo te gustaría viajar. Prepararemos una cotización según tu solicitud.</p>
+                <figure class="journey-photo"><img src="{% static 'Tours/images/atacama.jpg' %}" alt="Paisaje del desierto de Atacama"><figcaption>24°30' S <span>DESIERTO DE ATACAMA</span></figcaption></figure>
+                <div class="journey-price-note">Los valores se confirman después de revisar tu solicitud.</div>
+            {% endif %}
+        </section>
+        {% if not messages %}
+            <section class="journey-panel journey-quote-panel" aria-labelledby="quote-title">
+                <div class="journey-panel-kicker">SOLICITUD DE COTIZACIÓN</div>
+                <h2 id="quote-title">Planea tu viaje</h2>
+                <p class="journey-panel-intro">Completa tus datos y elegimos el próximo paso contigo.</p>
+                <form method="post" class="journey-form" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="journey-field{% if field.name != 'nombre_cliente' %} journey-field-half{% endif %}">
+                            <label for="{{ field.id_for_label }}">{% if field.name == 'tour' %}Destino{% elif field.name == 'fecha_reserva' %}Fecha estimada{% elif field.name == 'cantidad_personas' %}Viajeros{% else %}{{ field.label }}{% endif %}</label>
+                            {{ field }}
+                            {% for error in field.errors %}<span class="journey-field-error">{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                    {% if form.non_field_errors %}<div class="journey-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+                    <button class="journey-submit" type="submit">Enviar solicitud <span aria-hidden="true">↗</span></button>
+                </form>
+                <div class="journey-note">Tu solicitud no genera un cobro ni confirma una reserva.</div>
+            </section>
+        {% endif %}
+    </main>
+    <footer class="journey-footer"><span>FRAYMON TOURS</span><span>VIAJES QUE SE QUEDAN CONTIGO</span></footer>
+</body>
+</html>
