@@ -18,7 +18,17 @@
             <a href="#viajes">Viajes</a>
             <a href="#filosofia">La experiencia</a>
         </nav>
-        <a class="landing-login" href="{% url 'login' %}">Iniciar sesión <span aria-hidden="true">↗</span></a>
+        {% if user.is_authenticated %}
+            <div class="landing-account">
+                <span class="landing-user">Hola, {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="landing-login landing-logout" type="submit">Cerrar sesión <span aria-hidden="true">↗</span></button>
+                </form>
+            </div>
+        {% else %}
+            <a class="landing-login" href="{% url 'login' %}">Iniciar sesión <span aria-hidden="true">↗</span></a>
+        {% endif %}
     </header>
 
     <main>

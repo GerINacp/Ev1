@@ -90,6 +90,10 @@
         .landing-nav a:hover,.landing-login:hover,.landing-footer a:hover{color:#bd5d3d}
         .landing-login{font-size:12px;font-weight:700}
         .landing-login span{margin-left:8px;color:#bd5d3d}
+        .landing-account{display:flex;align-items:center;gap:14px}
+        .landing-user{color:#777970;font-size:10px}
+        .landing-logout{padding:9px 12px;border:1px solid #d9d8d1;background:transparent;font-family:inherit;cursor:pointer}
+        .landing-logout:hover{border-color:#bd5d3d}
         .landing-hero{position:relative;width:min(1320px,calc(100% - 96px));min-height:650px;margin:0 auto;padding:68px 0 84px;display:grid;grid-template-columns:.92fr 1.08fr;align-items:center;gap:30px}
         .landing-hero-copy{position:relative;z-index:1;padding:20px 0 0 7.5%}
         .landing-eyebrow{display:flex;align-items:center;gap:10px;color:#73756d;font-size:10px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase}
@@ -174,6 +178,8 @@
             .landing-nav{display:none}
             .landing-brand{font-size:10px}
             .landing-login{font-size:11px}
+            .landing-account{gap:0}
+            .landing-user{display:none}
             .landing-hero{width:calc(100% - 36px);display:flex;flex-direction:column;align-items:stretch;gap:35px;padding:54px 0 67px}
             .landing-hero-copy{padding:0}
             .landing-hero h1{margin-top:22px;font-size:55px}

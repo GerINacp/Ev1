@@ -7,8 +7,9 @@ from Tours import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.landing_view, name='landing'),
-    path('inicio/', views.index_view, name='inicio'),
+    path('inicio/', views.legacy_index_redirect, name='inicio'),
     path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
     path('registro/', views.registro_view, name='registro'),
     path('cotizar/', views.cotizar_view, name='cotizar'),
 ]

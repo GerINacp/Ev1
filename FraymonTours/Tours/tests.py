@@ -14,6 +14,16 @@ class AccountAndQuoteFlowTests(TestCase):
 			email='traveler@example.com',
 		)
 
+	def test_logout_clears_session_and_restores_login_link(self):
+		self.client.force_login(self.user)
+
+		response = self.client.post(reverse('logout'))
+
+		self.assertRedirects(response, reverse('landing'))
+		self.assertNotIn('_auth_user_id', self.client.session)
+		landing = self.client.get(reverse('landing'))
+		self.assertContains(landing, 'Iniciar sesión')
+
 	def test_login_authenticates_and_returns_to_landing(self):
 		response = self.client.post(reverse('login'), {
 			'username': 'traveler_test',

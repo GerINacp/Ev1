@@ -24,7 +24,7 @@
             <div class="journey-panel-kicker">ACCESO A TU CUENTA</div>
             <h2 id="login-title">Iniciar sesión</h2>
             <p class="journey-panel-intro">Nos alegra volver a acompañarte.</p>
-            <form method="post" class="journey-form" novalidate>
+            <form method="post" action="{% url 'login' %}" class="journey-form" autocomplete="on">
                 {% csrf_token %}
                 {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
                 {% if form.non_field_errors %}<div class="journey-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}

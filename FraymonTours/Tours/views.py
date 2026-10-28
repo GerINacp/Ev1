@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_POST
 from Tours.forms import AccesoForm, CotizacionForm, RegistroForm
 from Tours.models import Viajes
 
@@ -20,9 +22,8 @@ def landing_view(request):
     tours = Viajes.objects.all()
     return render(request, 'Tours/landing.html', {'tours': tours})
 
-def index_view(request):
-    tours = Viajes.objects.all()
-    return render(request, 'Tours/index.html', {'tours': tours})
+def legacy_index_redirect(request):
+    return redirect('landing')
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -37,6 +38,12 @@ def login_view(request):
         'form': form,
         'next': _safe_next_url(request),
     })
+
+
+@require_POST
+def logout_view(request):
+    auth_logout(request)
+    return redirect('landing')
 
 def registro_view(request):
     if request.user.is_authenticated:
