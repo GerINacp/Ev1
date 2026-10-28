@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar reserva | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="employee-dashboard-page">
+    <header class="employee-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <div class="landing-account">
+            <span class="landing-user">Admin: {{ usuario.username }}</span>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="landing-login landing-logout" type="submit">Cerrar sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-brand-wrap">
+                <div class="dashboard-brand-mark">A</div>
+                <div>
+                    <div class="dashboard-brand">Administración</div>
+                    <small>Editar reserva</small>
+                </div>
+            </div>
+            <nav class="dashboard-nav">
+                <a href="{% url 'admin_dashboard' %}">Reserva del día</a>
+                <a href="{% url 'admin_tours' %}">Tours</a>
+                <a href="{% url 'landing' %}">Volver a sitio</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            <div class="dashboard-topbar">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Reprogramación</div>
+                    <h1>Editar reserva</h1>
+                </div>
+                <div class="topbar-pill">{{ reserva.nombre_cliente }}</div>
+            </div>
+
+            <div class="panel-block">
+                <form method="post" class="journey-form">
+                    {% csrf_token %}
+                    <div class="journey-field">
+                        <label>Cliente</label>
+                        <input class="journey-input" type="text" value="{{ reserva.nombre_cliente }}" disabled>
+                    </div>
+                    <div class="journey-field">
+                        <label>Tour</label>
+                        <input class="journey-input" type="text" value="{{ reserva.get_tour_display }}" disabled>
+                    </div>
+                    <div class="journey-field">
+                        <label for="fecha_reserva">Nueva fecha</label>
+                        <input class="journey-input" id="fecha_reserva" type="date" name="fecha_reserva" value="{{ reserva.fecha_reserva|date:'Y-m-d' }}">
+                    </div>
+                    <div class="journey-field">
+                        <label for="cantidad_personas">Cantidad de personas</label>
+                        <input class="journey-input" id="cantidad_personas" type="number" name="cantidad_personas" min="1" value="{{ reserva.cantidad_personas }}">
+                    </div>
+                    <div class="journey-field">
+                        <label for="estado">Estado</label>
+                        <select class="journey-input" id="estado" name="estado">
+                            {% for value, label in reserva.ESTADO_CHOICES %}
+                                <option value="{{ value }}" {% if reserva.estado == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="journey-field">
+                        <label>Precio base del tour</label>
+                        <input class="journey-input" type="text" value="CLP {{ precio_base|floatformat:0 }}" disabled>
+                    </div>
+                    <div class="journey-field">
+                        <label>Precio total estimado</label>
+                        <input id="precio-total-input" class="journey-input" type="text" value="CLP {{ precio_total|floatformat:0 }}" disabled>
+                    </div>
+                    <button class="journey-submit" type="submit">Guardar cambios <span aria-hidden="true">↗</span></button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const precioBase = Number('{{ precio_base|floatformat:0 }}'.replace(/[^\d]/g, '')) || 0;
+        const cantidadInput = document.getElementById('cantidad_personas');
+        const precioTotalInput = document.getElementById('precio-total-input');
+
+        function actualizarPrecioTotal() {
+            if (!cantidadInput || !precioTotalInput) return;
+            const cantidad = Number(cantidadInput.value) || 0;
+            precioTotalInput.value = 'CLP ' + (precioBase * cantidad).toLocaleString('es-CL');
+        }
+
+        if (cantidadInput) {
+            cantidadInput.addEventListener('input', actualizarPrecioTotal);
+            actualizarPrecioTotal();
+        }
+    </script>
+</body>
+</html>

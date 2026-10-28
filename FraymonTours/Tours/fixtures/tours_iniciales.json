@@ -6,6 +6,7 @@
       "nombre": "Viña del Mar",
       "descripcion": "Disfruta del mar, la arquitectura histórica y la hermosa costa de la Región de Valparaíso.",
       "imagen": "tours/costera.jpg",
+      "precio": 79000,
       "creado": "2026-01-01T00:00:00Z"
     }
   },
@@ -16,6 +17,7 @@
       "nombre": "Farellones & Valle Nevado",
       "descripcion": "Vive la experiencia de la cordillera, nieve, deportes de invierno y vistas inolvidables.",
       "imagen": "tours/glaciar.jpg",
+      "precio": 129000,
       "creado": "2026-01-01T00:00:00Z"
     }
   },
@@ -26,6 +28,7 @@
       "nombre": "City Tour",
       "descripcion": "Recorridos guiados por los puntos históricos y culturales más icónicos de la ciudad.",
       "imagen": "tours/atacama.jpg",
+      "precio": 45000,
       "creado": "2026-01-01T00:00:00Z"
     }
   }

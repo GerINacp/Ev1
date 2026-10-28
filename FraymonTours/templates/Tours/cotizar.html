@@ -24,7 +24,18 @@
             {% else %}
                 <h1>Elige tu ruta.<br>Nosotros te <em>orientamos.</em></h1>
                 <p>Cuéntanos qué destino te llama y cuándo te gustaría viajar. Prepararemos una cotización según tu solicitud.</p>
-                <figure class="journey-photo"><img src="{% static 'Tours/images/atacama.jpg' %}" alt="Paisaje del desierto de Atacama"><figcaption>24°30' S <span>DESIERTO DE ATACAMA</span></figcaption></figure>
+                {% if form.initial.tour == 'vina_del_mar' %}
+                    <figure class="journey-photo"><img id="tour-preview-image" src="{% static 'Tours/images/costera.jpg' %}" alt="Viña del Mar"><figcaption>33°01' S <span id="tour-preview-label">VIÑA DEL MAR</span></figcaption></figure>
+                {% elif form.initial.tour == 'farellones' %}
+                    <figure class="journey-photo"><img id="tour-preview-image" src="{% static 'Tours/images/glaciar.jpg' %}" alt="Farellones y Valle Nevado"><figcaption>33°20' S <span id="tour-preview-label">FARELLONES · VALLE NEVADO</span></figcaption></figure>
+                {% elif form.initial.tour == 'city_tour' %}
+                    <figure class="journey-photo"><img id="tour-preview-image" src="{% static 'Tours/images/city_tour.jpg' %}" alt="City Tour Santiago de noche"><figcaption>33°26' S <span id="tour-preview-label">CITY TOUR · SANTIAGO DE NOCHE</span></figcaption></figure>
+                {% else %}
+                    <figure class="journey-photo"><img id="tour-preview-image" src="{% static 'Tours/images/city_tour.jpg' %}" alt="City Tour Santiago de noche"><figcaption>33°26' S <span id="tour-preview-label">CITY TOUR · SANTIAGO DE NOCHE</span></figcaption></figure>
+                {% endif %}
+                <div class="journey-price-note">
+                    <span id="tour-price-badge">Desde CLP 79.000</span>
+                </div>
                 <div class="journey-price-note">Los valores se confirman después de revisar tu solicitud.</div>
             {% endif %}
         </section>
@@ -50,5 +61,49 @@
         {% endif %}
     </main>
     <footer class="journey-footer"><span>FRAYMON TOURS</span><span>VIAJES QUE SE QUEDAN CONTIGO</span></footer>
+    <script>
+        const tourPreview = {
+            vina_del_mar: {
+                src: "{% static 'Tours/images/costera.jpg' %}",
+                label: 'VIÑA DEL MAR',
+                alt: 'Viña del Mar',
+                price: '79.000'
+            },
+            farellones: {
+                src: "{% static 'Tours/images/glaciar.jpg' %}",
+                label: 'FARELLONES · VALLE NEVADO',
+                alt: 'Farellones y Valle Nevado',
+                price: '129.000'
+            },
+            city_tour: {
+                src: "{% static 'Tours/images/city_tour.jpg' %}",
+                label: 'CITY TOUR · SANTIAGO DE NOCHE',
+                alt: 'City Tour Santiago de noche',
+                price: '45.000'
+            }
+        };
+
+        const tourSelect = document.getElementById('id_tour');
+        const previewImage = document.getElementById('tour-preview-image');
+        const previewLabel = document.getElementById('tour-preview-label');
+        const priceBadge = document.getElementById('tour-price-badge');
+
+        function updateTourPreview() {
+            if (!tourSelect || !previewImage || !previewLabel || !priceBadge) return;
+
+            const selected = tourSelect.value;
+            const selectedTour = tourPreview[selected] || tourPreview.city_tour;
+
+            previewImage.src = selectedTour.src;
+            previewImage.alt = selectedTour.alt;
+            previewLabel.textContent = selectedTour.label;
+            priceBadge.textContent = `Desde CLP ${selectedTour.price}`;
+        }
+
+        if (tourSelect) {
+            tourSelect.addEventListener('change', updateTourPreview);
+            updateTourPreview();
+        }
+    </script>
 </body>
 </html>

@@ -21,6 +21,12 @@
         {% if user.is_authenticated %}
             <div class="landing-account">
                 <span class="landing-user">Hola, {{ user.username }}</span>
+                {% if user.profile and user.profile.rol == 'empleado' %}
+                    <a class="landing-login landing-employee-btn" href="{% url 'empleado_dashboard' %}">Panel del empleado <span aria-hidden="true">↗</span></a>
+                {% endif %}
+                {% if user.profile and user.profile.rol == 'admin' %}
+                    <a class="landing-login landing-employee-btn" href="{% url 'admin_dashboard' %}">Panel del administrador <span aria-hidden="true">↗</span></a>
+                {% endif %}
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button class="landing-login landing-logout" type="submit">Cerrar sesión <span aria-hidden="true">↗</span></button>
@@ -80,12 +86,12 @@
                         </div>
                     </div>
                     <div class="carousel-slide" aria-hidden="true">
-                        <img src="{% static 'Tours/images/atacama.jpg' %}" alt="Paisaje árido y cielo amplio del norte de Chile">
+                        <img src="{% static 'Tours/images/city_tour.jpg' %}" alt="Santiago de noche, skyline y luces de la ciudad">
                         <div class="carousel-caption">
                             <div class="carousel-caption-copy">
-                                <span>03 · NORTE DE CHILE</span>
+                                <span>03 · SANTIAGO DE NOCHE</span>
                                 <h3>City Tour</h3>
-                                <div>Historias, calles y rincones que cuentan la ciudad.</div>
+                                <div>Mirador de la ciudad, luces, historia y un skyline inolvidable.</div>
                             </div>
                             <a href="{% url 'cotizar' %}?tour=city_tour">Cotizar este tour <span aria-hidden="true">↗</span></a>
                         </div>
@@ -132,6 +138,7 @@
                         </a>
                         <div class="landing-tour-meta"><span>DESTINO CHILE</span><span>0{{ forloop.counter }}</span></div>
                         <h3>{{ tour.nombre }}</h3>
+                        <div class="landing-tour-price">Desde CLP {{ tour.precio|floatformat:0 }}</div>
                         <div class="landing-tour-description">{{ tour.descripcion|default:"Un recorrido para descubrir el paisaje a tu propio ritmo." }}</div>
                         {% if tour.nombre == "Viña del Mar" %}
                             <a class="landing-tour-link" href="{% url 'cotizar' %}?tour=vina_del_mar">Cotizar este tour <span aria-hidden="true">→</span></a>

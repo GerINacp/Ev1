@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar tours | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="employee-dashboard-page">
+    <header class="employee-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <div class="landing-account">
+            <span class="landing-user">Admin: {{ usuario.username }}</span>
+            <a class="landing-login landing-employee-btn" href="{% url 'admin_dashboard' %}">Panel admin <span aria-hidden="true">↗</span></a>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="landing-login landing-logout" type="submit">Cerrar sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-brand-wrap">
+                <div class="dashboard-brand-mark">A</div>
+                <div>
+                    <div class="dashboard-brand">Administración</div>
+                    <small>Contenido</small>
+                </div>
+            </div>
+            <nav class="dashboard-nav">
+                <a href="{% url 'admin_dashboard' %}">Reserva del día</a>
+                <a class="active" href="{% url 'admin_tours' %}">Tours</a>
+                <a href="{% url 'landing' %}">Volver a sitio</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            <div class="dashboard-topbar">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Gestión de contenido</div>
+                    <h1>Actualizar tours</h1>
+                </div>
+                <div class="topbar-pill">{{ tours|length }} tours</div>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="journey-errors" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="panel-block">
+                <div class="panel-header">
+                    <h2>Editar tours</h2>
+                    <span>Precios y contenido</span>
+                </div>
+
+                <div class="tour-admin-list">
+                    {% for tour in tours %}
+                        <article class="route-card admin-tour-card">
+                            <div class="route-thumb" style="background-image: url(&quot;{% if tour.imagen %}{{ tour.imagen.url }}{% else %}{% static 'Tours/images/costera.jpg' %}{% endif %}&quot;);"></div>
+                            <div class="route-info">
+                                <h3>{{ tour.nombre }}</h3>
+                                <p>{{ tour.descripcion|default:'Sin descripción aún.' }}</p>
+                                <div class="tour-price-tag">CLP {{ tour.precio|floatformat:0 }}</div>
+                                <a class="mini-button" href="{% url 'admin_editar_tour' tour.codigo %}">Editar</a>
+                            </div>
+                        </article>
+                    {% empty %}
+                        <div class="empty-small">No hay tours registrados.</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="panel-block">
+                <div class="panel-header">
+                    <h2>Crear o actualizar tour</h2>
+                    <span>Subir nueva información</span>
+                </div>
+                <form method="post" enctype="multipart/form-data" class="journey-form">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="journey-field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}<span class="journey-field-error">{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button class="journey-submit" type="submit">Guardar cambios <span aria-hidden="true">↗</span></button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

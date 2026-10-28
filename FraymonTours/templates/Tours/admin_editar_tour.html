@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar tour | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="employee-dashboard-page">
+    <header class="employee-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <div class="landing-account">
+            <span class="landing-user">Admin: {{ usuario.username }}</span>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="landing-login landing-logout" type="submit">Cerrar sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-brand-wrap">
+                <div class="dashboard-brand-mark">A</div>
+                <div>
+                    <div class="dashboard-brand">Administración</div>
+                    <small>Edición</small>
+                </div>
+            </div>
+            <nav class="dashboard-nav">
+                <a href="{% url 'admin_dashboard' %}">Reserva del día</a>
+                <a class="active" href="{% url 'admin_tours' %}">Tours</a>
+                <a href="{% url 'landing' %}">Volver a sitio</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            <div class="dashboard-topbar">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Editor de tour</div>
+                    <h1>{{ tour.nombre }}</h1>
+                </div>
+                <div class="topbar-pill">Editar contenido</div>
+            </div>
+
+            <div class="panel-block">
+                <form method="post" enctype="multipart/form-data" class="journey-form">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="journey-field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}<div class="journey-help">{{ field.help_text|safe }}</div>{% endif %}
+                            {% for error in field.errors %}<span class="journey-field-error">{{ error }}</span>{% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button class="journey-submit" type="submit">Guardar cambios <span aria-hidden="true">↗</span></button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

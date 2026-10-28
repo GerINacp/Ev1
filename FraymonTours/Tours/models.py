@@ -1,5 +1,33 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.get_or_create(user=instance, defaults={'rol': 'cliente'})
+
+
+class UserProfile(models.Model):
+    ROLE_CHOICES = [
+        ('cliente', 'Cliente'),
+        ('empleado', 'Empleado'),
+        ('admin', 'Administrador'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    rol = models.CharField(max_length=20, choices=ROLE_CHOICES, default='cliente', verbose_name='Rol')
+
+    def __str__(self):
+        return f"{self.user.username} ({self.get_rol_display()})"
+
+    class Meta:
+        verbose_name = 'Perfil de Usuario'
+        verbose_name_plural = 'Perfiles de Usuario'
+
 
 class Reserva(models.Model):
     TOURS_CHOICES = [
@@ -9,12 +37,19 @@ class Reserva(models.Model):
         ('valle_nevado', 'Valle Nevado'),
     ]
 
+    ESTADO_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('confirmada', 'Confirmada'),
+        ('cancelada', 'Cancelada'),
+    ]
+
     nombre_cliente = models.CharField(max_length=100, verbose_name="Nombre del cliente")
     email = models.EmailField(verbose_name="Correo electrónico")
     telefono = models.CharField(max_length=20, verbose_name="Teléfono")
     tour = models.CharField(max_length=50, choices=TOURS_CHOICES, verbose_name="Tour")
     fecha_reserva = models.DateField(verbose_name="Fecha del tour")
     cantidad_personas = models.PositiveIntegerField(default=1, verbose_name="Cantidad de personas")
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente', verbose_name='Estado de la reserva')
     creado_el = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
 
     class Meta:
@@ -30,6 +65,7 @@ class Viajes(models.Model):
     nombre = models.CharField(max_length=100, verbose_name='Nombre del Viaje')
     descripcion = models.TextField(blank=True, null=True, verbose_name='Descripción')
     imagen = models.ImageField(upload_to='tours/', blank=True, null=True, verbose_name='Imagen del Tour')
+    precio = models.PositiveIntegerField(default=0, verbose_name='Precio base (CLP)')
     creado = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -41,7 +77,6 @@ class Viajes(models.Model):
         verbose_name_plural = 'Tours'
 
 
-# 1. Agrega estos nuevos modelos arriba o antes de la clase Empleado
 class Cargo(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre del Cargo")
 
@@ -64,8 +99,8 @@ class Departamento(models.Model):
         verbose_name_plural = "Departamentos"
 
 
-# 2. Modifica tu clase Empleado existente para que luzca así:
 class Empleado(models.Model):
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='empleado_profile')
     run = models.CharField(max_length=10, verbose_name='RUN')
     nombre = models.CharField(max_length=50, verbose_name='Nombre')
     paterno = models.CharField(max_length=50, verbose_name='Apellido Paterno')
@@ -73,11 +108,8 @@ class Empleado(models.Model):
     codigoEmpleado = models.CharField(max_length=20, verbose_name='Código de Empleado')
     sueldo = models.PositiveIntegerField(default=450000, verbose_name='Sueldo Base')
     fechaNac = models.DateField(null=True, blank=True, verbose_name='Fecha de Nacimiento')
-    
-    # ¡AQUÍ ESTÁ EL CAMBIO CLAVE! Ahora apuntan a sus modelos correctos en lugar de a 'Viajes'
     cargo = models.ForeignKey(Cargo, null=False, on_delete=models.RESTRICT, related_name='empleados_cargo')
     departamento = models.ForeignKey(Departamento, null=True, on_delete=models.CASCADE, related_name='empleados_departamento')
-    
     creado = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

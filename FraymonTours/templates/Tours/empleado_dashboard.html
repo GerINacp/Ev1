@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de empleado | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="employee-dashboard-page">
+    <header class="employee-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <div class="landing-account">
+            <span class="landing-user">Empleado: {{ usuario.username }}</span>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="landing-login landing-logout" type="submit">Cerrar sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-brand-wrap">
+                <div class="dashboard-brand-mark">F</div>
+                <div>
+                    <div class="dashboard-brand">Portal interno</div>
+                    <small>Operación</small>
+                </div>
+            </div>
+            <nav class="dashboard-nav">
+                <a class="active" href="{% url 'empleado_dashboard' %}">Reservas</a>
+                <a href="{% url 'empleado_perfil' %}">Mi perfil</a>
+                <a href="{% url 'landing' %}">Sitio público</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            <div class="dashboard-topbar">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Gestión operativa</div>
+                    <h1>Panel del empleado</h1>
+                </div>
+                <div class="topbar-pill">{{ reservas|length }} reservas activas</div>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="journey-errors" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="stats-grid">
+                <div class="stat-card accent">
+                    <div class="stat-icon">🧾</div>
+                    <div>
+                        <span>Total reservas</span>
+                        <strong>{{ reservas|length }}</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div>
+                        <span>Pendientes</span>
+                        <strong>{{ reservas|length }}</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🗺️</div>
+                    <div>
+                        <span>Rutas activas</span>
+                        <strong>{{ rutas|length }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-block">
+                <div class="panel-header">
+                    <h2>Reservas activas</h2>
+                    <span>Control del día</span>
+                </div>
+
+                {% for reserva in reservas %}
+                    {% if reserva.tour == 'vina_del_mar' %}
+                        {% static 'Tours/images/costera.jpg' as tour_image %}
+                    {% elif reserva.tour == 'farellones' %}
+                        {% static 'Tours/images/glaciar.jpg' as tour_image %}
+                    {% elif reserva.tour == 'city_tour' %}
+                        {% static 'Tours/images/city_tour.jpg' as tour_image %}
+                    {% else %}
+                        {% static 'Tours/images/city_tour.jpg' as tour_image %}
+                    {% endif %}
+
+                    <article class="reservation-card">
+                        <div class="reservation-photo" style="background-image: url('{{ tour_image }}');">
+                            <span class="photo-tag">{{ reserva.get_tour_display }}</span>
+                        </div>
+                        <div class="reservation-body">
+                            <div class="reservation-head">
+                                <div>
+                                    <h3>{{ reserva.nombre_cliente }}</h3>
+                                    <p>{{ reserva.email }}</p>
+                                </div>
+                                <span class="status-badge status-{{ reserva.estado }}">{{ reserva.get_estado_display }}</span>
+                            </div>
+
+                            <div class="reservation-meta-row">
+                                <div><label>Teléfono</label><strong>{{ reserva.telefono }}</strong></div>
+                                <div><label>Fecha</label><strong>{{ reserva.fecha_reserva }}</strong></div>
+                                <div><label>Personas</label><strong>{{ reserva.cantidad_personas }}</strong></div>
+                            </div>
+
+                            <form method="post" action="{% url 'cambiar_estado_reserva' reserva.id %}" class="state-form">
+                                {% csrf_token %}
+                                <select name="estado" class="journey-input small-select">
+                                    {% for value, label in reserva.ESTADO_CHOICES %}
+                                        <option value="{{ value }}" {% if reserva.estado == value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="mini-button">Guardar</button>
+                            </form>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-panel">
+                        <h3>No hay reservas registradas</h3>
+                        <p>Cuando un cliente haga una cotización, aparecerá aquí con su tour y su información.</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="panel-block two-columns">
+                <div class="mini-panel">
+                    <div class="panel-header">
+                        <h2>Rutas y operativa</h2>
+                        <span>Programación</span>
+                    </div>
+                    <div class="route-list">
+                        {% for ruta in rutas %}
+                            <article class="route-card">
+                                <div class="route-thumb" style="background-image: url(&quot;{% static 'Tours/images/costera.jpg' %}&quot;);"></div>
+                                <div class="route-info">
+                                    <h3>{{ ruta.nombre }}</h3>
+                                    <p>{{ ruta.descripcion|default:'Sin descripción adicional' }}</p>
+                                </div>
+                            </article>
+                        {% empty %}
+                            <div class="empty-small">No hay rutas disponibles.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mini-panel">
+                    <div class="panel-header">
+                        <h2>Lista de pasajeros</h2>
+                        <span>Abordaje</span>
+                    </div>
+                    <div class="passenger-list">
+                        {% for reserva in reservas %}
+                            {% if reserva.estado != 'cancelada' %}
+                                <article class="passenger-card">
+                                    <div class="passenger-avatar">{{ reserva.nombre_cliente|slice:':1'|upper }}</div>
+                                    <div>
+                                        <h3>{{ reserva.nombre_cliente }}</h3>
+                                        <p>{{ reserva.fecha_reserva }} · {{ reserva.cantidad_personas }} pax</p>
+                                    </div>
+                                </article>
+                            {% endif %}
+                        {% empty %}
+                            <div class="empty-small">No hay pasajeros registrados.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

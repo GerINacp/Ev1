@@ -1,0 +1,183 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel administrador | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="employee-dashboard-page">
+    <header class="employee-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <div class="landing-account">
+            <span class="landing-user">Admin: {{ usuario.username }}</span>
+            <a class="landing-login landing-employee-btn" href="{% url 'landing' %}">Sitio público <span aria-hidden="true">↗</span></a>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="landing-login landing-logout" type="submit">Cerrar sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-brand-wrap">
+                <div class="dashboard-brand-mark">A</div>
+                <div>
+                    <div class="dashboard-brand">Administración</div>
+                    <small>Supervisor</small>
+                </div>
+            </div>
+            <nav class="dashboard-nav">
+                <a class="active" href="{% url 'admin_dashboard' %}">Reserva del día</a>
+                <a href="#admin-content">Contenido</a>
+                <a href="#admin-passengers">Pasajeros</a>
+                <a href="{% url 'landing' %}">Volver a sitio</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            <div class="dashboard-topbar">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Operación diaria</div>
+                    <h1>Panel del administrador</h1>
+                </div>
+                <div class="topbar-pill">{{ reservas|length }} reservas</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card accent">
+                    <div class="stat-icon">🧾</div>
+                    <div>
+                        <span>Reservas hoy</span>
+                        <strong>{{ reservas|length }}</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📸</div>
+                    <div>
+                        <span>Contenido</span>
+                        <strong>{{ rutas|length }}</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🚌</div>
+                    <div>
+                        <span>Pasajeros</span>
+                        <strong>{{ reservas|length }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-block" id="admin-content">
+                <div class="panel-header">
+                    <h2>Gestión de reservas del día</h2>
+                    <span>Operación</span>
+                </div>
+
+                {% for reserva in reservas %}
+                    {% if reserva.tour == 'vina_del_mar' %}
+                        {% static 'Tours/images/costera.jpg' as tour_image %}
+                    {% elif reserva.tour == 'farellones' %}
+                        {% static 'Tours/images/glaciar.jpg' as tour_image %}
+                    {% elif reserva.tour == 'city_tour' %}
+                        {% static 'Tours/images/city_tour.jpg' as tour_image %}
+                    {% else %}
+                        {% static 'Tours/images/city_tour.jpg' as tour_image %}
+                    {% endif %}
+
+                    <article class="reservation-card">
+                        <div class="reservation-photo" style="background-image: url('{{ tour_image }}');">
+                            <span class="photo-tag">{{ reserva.get_tour_display }}</span>
+                        </div>
+                        <div class="reservation-body">
+                            <div class="reservation-head">
+                                <div>
+                                    <h3>{{ reserva.nombre_cliente }}</h3>
+                                    <p>{{ reserva.email }} · {{ reserva.telefono }}</p>
+                                </div>
+                                <span class="status-badge status-{{ reserva.estado }}">{{ reserva.get_estado_display }}</span>
+                            </div>
+
+                            <div class="reservation-meta-row">
+                                <div><label>Fecha</label><strong>{{ reserva.fecha_reserva }}</strong></div>
+                                <div><label>Clientes</label><strong>{{ reserva.cantidad_personas }}</strong></div>
+                                <div><label>Tour</label><strong>{{ reserva.get_tour_display }}</strong></div>
+                            </div>
+
+                            {% with tour_name=reserva.get_tour_display %}
+                                {% for ruta in rutas %}
+                                    {% if ruta.nombre == tour_name %}
+                                        <div class="reservation-total">
+                                            <span>Precio estimado</span>
+                                            <strong>CLP {{ ruta.precio|mul:reserva.cantidad_personas|floatformat:0 }}</strong>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endwith %}
+
+                            <div class="admin-actions">
+                                <button class="mini-button" type="button">Confirmar</button>
+                                <button class="mini-button secondary" type="button">Reprogramar</button>
+                                <button class="mini-button ghost" type="button">Atender</button>
+                                <a class="mini-button" href="{% url 'admin_editar_reserva' reserva.id %}">Editar reserva</a>
+                            </div>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty-panel">
+                        <h3>No hay reservas del día</h3>
+                        <p>Cuando lleguen nuevas solicitudes, aparecerán aquí para gestionarlas.</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="panel-block two-columns">
+                <div class="mini-panel">
+                    <div class="panel-header">
+                        <h2>Contenido y tours</h2>
+                        <span>Actualización</span>
+                    </div>
+                    <div class="route-list">
+                        {% for ruta in rutas %}
+                            <article class="route-card">
+                                <div class="route-thumb" style="background-image: url(&quot;{% static 'Tours/images/costera.jpg' %}&quot;);"></div>
+                                <div class="route-info">
+                                    <h3>{{ ruta.nombre }}</h3>
+                                    <p>{{ ruta.descripcion|default:'Actualizar descripción o contenido del tour.' }}</p>
+                                </div>
+                            </article>
+                        {% empty %}
+                            <div class="empty-small">No hay contenido registrado.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mini-panel" id="admin-passengers">
+                    <div class="panel-header">
+                        <h2>Listados de pasajeros</h2>
+                        <span>Asistencia</span>
+                    </div>
+                    <div class="passenger-list">
+                        {% for reserva in reservas %}
+                            {% if reserva.estado != 'cancelada' %}
+                                <article class="passenger-card">
+                                    <div class="passenger-avatar">{{ reserva.nombre_cliente|slice:':1'|upper }}</div>
+                                    <div>
+                                        <h3>{{ reserva.nombre_cliente }}</h3>
+                                        <p>{{ reserva.fecha_reserva }} · {{ reserva.cantidad_personas }} pax</p>
+                                    </div>
+                                </article>
+                            {% endif %}
+                        {% empty %}
+                            <div class="empty-small">No hay pasajeros para listar.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

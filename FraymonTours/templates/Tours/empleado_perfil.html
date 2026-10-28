@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil | Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="journey-page">
+    <header class="journey-header">
+        <a class="landing-brand" href="{% url 'landing' %}"><span class="landing-brand-mark" aria-hidden="true">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <div class="landing-account">
+            <span class="landing-user">{{ user.username }}</span>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="landing-login landing-logout" type="submit">Cerrar sesión</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-brand">Portal interno</div>
+            <nav class="dashboard-nav">
+                <a href="{% url 'empleado_dashboard' %}">Reservas</a>
+                <a class="active" href="{% url 'empleado_perfil' %}">Mi perfil</a>
+                <a href="{% url 'landing' %}">Sitio público</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            <div class="dashboard-topbar">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Datos del empleado</div>
+                    <h1>Mi perfil</h1>
+                </div>
+            </div>
+
+            {% if perfil %}
+                <div class="panel-block profile-card">
+                    <p><strong>Nombre:</strong> {{ perfil.nombre }} {{ perfil.paterno }} {{ perfil.materno }}</p>
+                    <p><strong>RUN:</strong> {{ perfil.run }}</p>
+                    <p><strong>Código:</strong> {{ perfil.codigoEmpleado }}</p>
+                    <p><strong>Cargo:</strong> {{ perfil.cargo }}</p>
+                    <p><strong>Departamento:</strong> {{ perfil.departamento|default:'Sin departamento asignado' }}</p>
+                    <p><strong>Sueldo base:</strong> ${{ perfil.sueldo|floatformat:0 }}</p>
+                    <p><strong>Usuario de acceso:</strong> {{ user.username }}</p>
+                </div>
+            {% else %}
+                <div class="panel-block">
+                    <p>El perfil del empleado aún no está asociado a esta cuenta.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
