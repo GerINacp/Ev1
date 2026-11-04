@@ -5,6 +5,11 @@ from django.utils import timezone
 from Tours.models import Reserva, UserProfile, Viajes
 
 class RegistroForm(UserCreationForm):
+    # Definimos el username explícitamente para limitar sus caracteres en el formulario y HTML
+    username = forms.CharField(
+        max_length=14,
+        widget=forms.TextInput(attrs={'maxlength': '14', 'class': 'journey-input', 'placeholder': 'Ingresa usuario'})
+    )
     email = forms.EmailField(required=True, label="Correo Electrónico")
 
     class Meta:
@@ -22,7 +27,7 @@ class RegistroForm(UserCreationForm):
             'placeholder': 'Repite la contraseña',
         })
         for field_name, field in self.fields.items():
-            if field_name not in {'password1', 'password2'}:
+            if field_name not in {'password1', 'password2', 'username'}: # Agregamos username para que el bucle no lo sobrescriba
                 field.widget.attrs.update({
                     'class': 'journey-input',
                     'placeholder': f'Ingresa {field.label.lower()}',

@@ -6,30 +6,11 @@ from django import forms
 from Tours.models import Reserva, Viajes, Empleado, Cargo, Departamento, UserProfile
 
 
-class UserProfileInline(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-    extra = 0
-    fields = ('rol',)
-    verbose_name = 'Perfil de usuario'
-    verbose_name_plural = 'Perfil de usuario'
-
-
-class CustomUserAdmin(UserAdmin):
-    inlines = (UserProfileInline,)
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'get_rol')
-    search_fields = ('username', 'email', 'first_name', 'last_name')
-
-    def get_rol(self, obj):
-        try:
-            return obj.profile.rol
-        except UserProfile.DoesNotExist:
-            return 'Sin perfil'
-    get_rol.short_description = 'Rol'
-
-
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'rol')
+    list_filter = ('rol',)
+    search_fields = ('user__username', 'user__email')
 
 
 @admin.register(Reserva)
