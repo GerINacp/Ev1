@@ -48,12 +48,7 @@ class EmpleadoAdmin(admin.ModelAdmin):
         models.DateField: {'widget': forms.DateInput(attrs={'type': 'date'})},
     }
 
-@admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'rol')
-    list_filter = ('rol',)
-    search_fields = ('user__username', 'user__email')
-    autocomplete_fields = ('user',)
+
 
 admin.site.register(Cargo)
 admin.site.register(Departamento)
