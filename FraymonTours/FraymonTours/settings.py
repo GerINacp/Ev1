@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Tours',
+    'TransporteApi'
 ]
 
 MIDDLEWARE = [
@@ -54,16 +55,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FraymonTours.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'transporte',
-        'USER': 'user_transporte',
-        'PASSWORD': 'Holitas123_',
-        'HOST': 'localhost',
-        'PORT': '3306',
+DB_ENGINE = os.getenv('DB_ENGINE', '').strip()
+
+if DB_ENGINE:
+    DATABASES = {
+        'default': {
+            'ENGINE': DB_ENGINE,
+            'NAME': os.getenv('DB_NAME', str(BASE_DIR / 'db.sqlite3')),
+            'USER': os.getenv('DB_USER', ''),
+            'PASSWORD': os.getenv('DB_PASSWORD', ''),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '3306'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+# Ejemplo de MySQL opcional (solo si quieres activarlo manualmente):
+# DB_ENGINE=django.db.backends.mysql
+# DB_NAME=transporte
+# DB_USER=user_transporte
+# DB_PASSWORD=Holitas123_
+# DB_HOST=localhost
+# DB_PORT=3306
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -89,5 +108,8 @@ STATICFILES_DIRS = [
 # Configuración de Archivos Multimedia (Imágenes subidas desde el Admin)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configuración de API externa
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

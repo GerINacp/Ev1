@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from Tours import views
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
     path('admin-panel/tours/', views.admin_tours, name='admin_tours'),
     path('admin-panel/tours/<int:tour_id>/editar/', views.admin_editar_tour, name='admin_editar_tour'),
     path('admin-panel/reserva/<int:reserva_id>/editar/', views.admin_editar_reserva, name='admin_editar_reserva'),
+    path('api/', include('TransporteApi.urls')),
 ]
 
 if settings.DEBUG:

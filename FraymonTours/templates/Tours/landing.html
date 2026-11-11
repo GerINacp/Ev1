@@ -173,6 +173,100 @@
             </div>
             <div class="landing-finale-stamp" aria-hidden="true"><span>F</span><small>FRAYMON<br>TOURS · CHILE</small></div>
         </section>
+
+        <section class="landing-google-results" aria-labelledby="google-results-title">
+            <div class="landing-section-heading">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Destinos reales en Chile</div>
+                    <h2 id="google-results-title">Lugares que también están apareciendo en Google.</h2>
+                </div>
+                <span class="landing-count">SUGERENCIAS EN VIVO <b>{{ google_places|length }}</b></span>
+            </div>
+
+            {% if google_places %}
+                <div class="landing-google-grid">
+                    {% for place in google_places %}
+                        <article class="landing-google-card">
+                            <div class="landing-google-image">
+                                {% if place.photo %}
+                                    <img src="{{ place.photo }}" alt="{{ place.name }}">
+                                {% else %}
+                                    <img src="{% static 'Tours/images/costera.jpg' %}" alt="{{ place.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="landing-google-body">
+                                <div class="landing-google-topline">
+                                    <span>DESTINO GOOGLE</span>
+                                    {% if place.rating %}
+                                        <span>{{ place.rating }} ★</span>
+                                    {% endif %}
+                                </div>
+                                <h3>{{ place.name }}</h3>
+                                <p>{{ place.address }}</p>
+                                <a href="{{ place.map_url }}" target="_blank" rel="noreferrer">Ver en mapa <span aria-hidden="true">↗</span></a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+
+                {% if map_location %}
+                    <div class="landing-map-panel">
+                        <div class="landing-map-copy">
+                            <div class="landing-eyebrow"><span></span> Mapa</div>
+                            <h3>{{ map_location.name }}</h3>
+                            <p>{{ map_location.address }}</p>
+                        </div>
+                        <iframe
+                            class="landing-map-frame"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps?q={{ map_location.name }}+Chile&output=embed">
+                        </iframe>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="landing-empty-state landing-google-empty">No se pudieron cargar resultados en vivo de Google en este momento.</div>
+            {% endif %}
+        </section>
+
+        <section class="landing-combined-results" aria-labelledby="combined-results-title">
+            <div class="landing-section-heading">
+                <div>
+                    <div class="landing-eyebrow"><span></span> Chile completo</div>
+                    <h2 id="combined-results-title">Nuestros tours y sugerencias de Google juntos.</h2>
+                </div>
+                <span class="landing-count">DESTINOS COMBINADOS <b>{{ combined_destinations|length }}</b></span>
+            </div>
+
+            <div class="landing-google-grid">
+                {% for item in combined_destinations %}
+                    <article class="landing-google-card">
+                        <div class="landing-google-image">
+                            {% if item.image %}
+                                <img src="{{ item.image }}" alt="{{ item.name }}">
+                            {% else %}
+                                <img src="{% static 'Tours/images/costera.jpg' %}" alt="{{ item.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="landing-google-body">
+                            <div class="landing-google-topline">
+                                <span>{% if item.source == 'local' %}TOUR PROPIO{% else %}DESTINO GOOGLE{% endif %}</span>
+                                {% if item.rating %}
+                                    <span>{{ item.rating }} ★</span>
+                                {% endif %}
+                            </div>
+                            <h3>{{ item.name }}</h3>
+                            <p>{{ item.description }}</p>
+                            {% if item.price %}
+                                <div class="landing-tour-price landing-combined-price">Desde CLP {{ item.price|floatformat:0 }}</div>
+                            {% endif %}
+                            <a href="{{ item.link }}" target="{% if item.source == 'google' %}_blank{% else %}_self{% endif %}" rel="noreferrer">{% if item.source == 'local' %}Cotizar ahora{% else %}Ver en mapa{% endif %} <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
     </main>
 
     <footer class="landing-footer">

@@ -1,3 +1,8 @@
+import json
+import os
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -7,6 +12,83 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 from Tours.forms import AccesoForm, CotizacionForm, RegistroForm, TourAdminForm
 from Tours.models import Empleado, Reserva, UserProfile, Viajes
+
+
+def _fetch_google_places_results():
+    api_key = os.getenv('GOOGLE_API_KEY')
+    if not api_key:
+        return []
+
+    queries = [
+        'tour chile',
+        'Viña del Mar turismo',
+        'Valle Nevado turismo',
+        'Santiago tour',
+    ]
+
+    all_results = []
+    seen = set()
+
+    for query in queries:
+        body = {
+            'textQuery': f'{query} Chile',
+            'languageCode': 'es',
+            'regionCode': 'CL',
+            'maxResultCount': 3,
+        }
+
+        req = Request(
+            'https://places.googleapis.com/v1/places:searchText',
+            data=json.dumps(body).encode('utf-8'),
+            headers={
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': api_key,
+                'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.photos,places.location,places.rating,places.types',
+            },
+            method='POST',
+        )
+
+        try:
+            with urlopen(req, timeout=20) as response:
+                payload = json.loads(response.read().decode('utf-8'))
+        except Exception:
+            continue
+
+        for item in payload.get('places', [])[:4]:
+            place_id = item.get('id')
+            if not place_id or place_id in seen:
+                continue
+
+            display_name = item.get('displayName', {}).get('text', 'Lugar turístico')
+            address = item.get('formattedAddress', 'Chile')
+            location = item.get('location', {})
+
+            photo = ''
+            photos = item.get('photos', [])
+            if photos:
+                photo_name = photos[0].get('name')
+                if photo_name:
+                    photo = (
+                        f'https://places.googleapis.com/v1/{photo_name}/media'
+                        f'?maxHeightPx=800&maxWidthPx=800&key={api_key}'
+                    )
+
+            result = {
+                'name': display_name,
+                'address': address,
+                'rating': item.get('rating', 0),
+                'photo': photo,
+                'map_url': f"https://www.google.com/maps/search/?api=1&query={display_name}+Chile",
+                'lat': location.get('latitude'),
+                'lng': location.get('longitude'),
+            }
+            all_results.append(result)
+            seen.add(place_id)
+
+        if len(all_results) >= 6:
+            break
+
+    return all_results[:6]
 
 
 def _safe_next_url(request):
@@ -41,6 +123,40 @@ def _redirect_by_role(user):
     return 'landing'
 
 
+def _merge_destinations(local_tours, google_places):
+    merged = []
+
+    for tour in local_tours:
+        merged.append({
+            'source': 'local',
+            'id': tour.codigo,
+            'name': tour.nombre,
+            'description': tour.descripcion or 'Un recorrido para descubrir el paisaje a tu propio ritmo.',
+            'price': int(tour.precio),
+            'image': tour.imagen.url if tour.imagen else '',
+            'link': '/cotizar/?tour=vina_del_mar' if tour.nombre == 'Viña del Mar' else '/cotizar/?tour=farellones' if tour.nombre == 'Farellones & Valle Nevado' else '/cotizar/?tour=city_tour',
+            'rating': None,
+            'address': 'Chile',
+            'map_url': '#',
+        })
+
+    for place in google_places:
+        merged.append({
+            'source': 'google',
+            'id': place.get('name'),
+            'name': place.get('name'),
+            'description': place.get('address', 'Destino turístico en Chile.'),
+            'price': None,
+            'image': place.get('photo', ''),
+            'link': place.get('map_url', '#'),
+            'rating': place.get('rating'),
+            'address': place.get('address', 'Chile'),
+            'map_url': place.get('map_url', '#'),
+        })
+
+    return merged
+
+
 @login_required
 def empleado_dashboard(request):
     profile = _get_profile_or_default(request.user)
@@ -61,7 +177,15 @@ def empleado_dashboard(request):
 
 def landing_view(request):
     tours = Viajes.objects.all()
-    return render(request, 'Tours/landing.html', {'tours': tours})
+    google_places = _fetch_google_places_results()
+    combined_destinations = _merge_destinations(tours, google_places)
+    map_location = google_places[0] if google_places else None
+    return render(request, 'Tours/landing.html', {
+        'tours': tours,
+        'google_places': google_places,
+        'combined_destinations': combined_destinations,
+        'map_location': map_location,
+    })
 
 
 def legacy_index_redirect(request):
