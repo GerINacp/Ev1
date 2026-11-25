@@ -1,0 +1,23 @@
+[
+  {
+    "nombre": "Viña del Mar",
+    "descripcion": "Disfruta del mar, la arquitectura histórica y la hermosa costa de la Región de Valparaíso.",
+    "precio": 79000,
+    "imagen": "costera.jpg",
+    "tour": "vina_del_mar"
+  },
+  {
+    "nombre": "Farellones & Valle Nevado",
+    "descripcion": "Vive la experiencia de la cordillera, nieve, deportes de invierno y vistas inolvidables.",
+    "precio": 129000,
+    "imagen": "glaciar.jpg",
+    "tour": "farellones"
+  },
+  {
+    "nombre": "City Tour",
+    "descripcion": "Recorridos guiados por los puntos históricos y culturales más icónicos de la ciudad.",
+    "precio": 45000,
+    "imagen": "atacama.jpg",
+    "tour": "city_tour"
+  }
+]

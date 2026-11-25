@@ -180,7 +180,14 @@ def landing_view(request):
     try:
         tours = Viajes.objects.all()
     except DatabaseError:
-        return render(request, 'landing_offline.html')
+        json_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'Tours', 'offline_tours.json')
+        try:
+            with open(json_path, 'r', encoding='utf-8') as offline_file:
+                offline_tours = json.load(offline_file)
+        except (OSError, json.JSONDecodeError):
+            offline_tours = []
+
+        return render(request, 'landing_offline_full.html', {'offline_tours': offline_tours})
 
     google_places = _fetch_google_places_results()
     combined_destinations = _merge_destinations(tours, google_places)

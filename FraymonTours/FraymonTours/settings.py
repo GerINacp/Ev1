@@ -56,34 +56,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FraymonTours.wsgi.application'
 
-DB_ENGINE = os.getenv('DB_ENGINE', '').strip()
+DB_ENGINE = os.getenv('DB_ENGINE', 'django.db.backends.mysql').strip()
 
-if DB_ENGINE:
-    DATABASES = {
-        'default': {
-            'ENGINE': DB_ENGINE,
-            'NAME': os.getenv('DB_NAME', str(BASE_DIR / 'db.sqlite3')),
-            'USER': os.getenv('DB_USER', ''),
-            'PASSWORD': os.getenv('DB_PASSWORD', ''),
-            'HOST': os.getenv('DB_HOST', 'localhost'),
-            'PORT': os.getenv('DB_PORT', '3306'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': DB_ENGINE,
+        'NAME': os.getenv('DB_NAME', 'transporte'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
-# Ejemplo de MySQL opcional (solo si quieres activarlo manualmente):
-# DB_ENGINE=django.db.backends.mysql
-# DB_NAME=transporte
-# DB_USER=user_transporte
-# DB_PASSWORD=Holitas123_
-# DB_HOST=localhost
-# DB_PORT=3306
+# SQLite opcional para desarrollo local sin MariaDB:
+# DB_ENGINE=django.db.backends.sqlite3
+# DB_NAME=Ruta-absoluta-o-nombre-de-la-base
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},

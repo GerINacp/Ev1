@@ -1,3 +1,6 @@
+import json
+import os
+
 from django.db import DatabaseError, connections
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -22,7 +25,18 @@ class DatabaseAvailabilityMiddleware:
                 cursor.fetchone()
         except DatabaseError:
             if request.path in ('/', '/inicio/'):
-                content = render_to_string('landing_offline.html', request=request)
+                json_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static', 'Tours', 'offline_tours.json')
+                try:
+                    with open(json_path, 'r', encoding='utf-8') as offline_file:
+                        offline_tours = json.load(offline_file)
+                except (OSError, json.JSONDecodeError):
+                    offline_tours = []
+
+                content = render_to_string(
+                    'landing_offline_full.html',
+                    {'offline_tours': offline_tours},
+                    request=request,
+                )
                 return HttpResponse(content, status=200)
 
             content = render_to_string('database_down.html', request=request)

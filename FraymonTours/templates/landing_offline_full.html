@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraymon Tours | Chile, a tu manera</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="landing-page" data-offline-mode="true">
+    <header class="landing-header">
+        <a class="landing-brand" href="#inicio"><span class="landing-brand-mark">F</span><span>FRAYMON <span class="landing-brand-light">TOURS</span></span></a>
+        <nav class="landing-nav"><a href="#viajes">Viajes</a><a href="#filosofia">La experiencia</a></nav>
+        <a class="landing-login offline-action" href="/login/">Iniciar sesión <span>↗</span></a>
+    </header>
+
+    <main>
+        <section class="landing-hero" id="inicio">
+            <div class="landing-hero-copy">
+                <div class="landing-eyebrow"><span></span> Chile, sin apuro</div>
+                <h1>Hay lugares<br>que se <em>quedan.</em></h1>
+                <p class="landing-intro">Una forma tranquila de descubrir Chile. El catálogo mostrado funciona desde nuestro respaldo temporal.</p>
+                <a class="landing-primary-link" href="#viajes">Explorar destinos <span>↓</span></a>
+            </div>
+            <figure class="landing-hero-image">
+                <img src="{% static 'Tours/images/costera.jpg' %}" alt="Costa chilena">
+                <figcaption><span>33°01' S</span><span>EL PACÍFICO, DE CERCA</span></figcaption>
+            </figure>
+        </section>
+
+        <section class="landing-destinations" id="viajes">
+            <div class="landing-section-heading">
+                <div><div class="landing-eyebrow"><span></span> Elige tu próximo paisaje</div><h2>Chile tiene otro ritmo.</h2></div>
+                <span class="landing-count">RUTAS DE RESPALDO <b>03</b></span>
+            </div>
+            <div class="landing-tour-grid">
+                {% for tour in offline_tours %}
+                <article class="landing-tour-card">
+                    <a class="landing-tour-image offline-action" href="/cotizar/?tour={{ tour.tour }}">
+                        <img src="{% static 'Tours/images/' %}{{ tour.imagen }}" alt="Paisaje de {{ tour.nombre }}">
+                        <span class="landing-image-arrow">↗</span>
+                    </a>
+                    <div class="landing-tour-meta"><span>DESTINO CHILE</span><span>0{{ forloop.counter }}</span></div>
+                    <h3>{{ tour.nombre }}</h3>
+                    <div class="landing-tour-price">Desde CLP {{ tour.precio }}</div>
+                    <div class="landing-tour-description">{{ tour.descripcion }}</div>
+                    <a class="landing-tour-link offline-action" href="/cotizar/?tour={{ tour.tour }}">Cotizar este tour <span>→</span></a>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="landing-philosophy" id="filosofia">
+            <div class="landing-philosophy-mark">02</div>
+            <div class="landing-philosophy-content">
+                <div class="landing-eyebrow"><span></span> Una pausa en el camino</div>
+                <h2>Menos itinerario.<br><em>Más presencia.</em></h2>
+                <p>Las rutas siguen visibles temporalmente mientras restablecemos el servicio de datos.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="database-error-modal" role="dialog" aria-modal="true" aria-labelledby="database-error-title" hidden>
+        <div style="max-width:680px;margin:20vh auto;padding:3rem;text-align:center;border:1px solid #d8d6cd;background:#f3f2ed;">
+            <h1 id="database-error-title">ERROR</h1>
+            <p>No puede ingresar a la página por el momento, inténtelo más tarde.</p>
+            <button type="button" id="database-error-close">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="{% static 'Tours/offline.js' %}" defer></script>
+</body>
+</html>
