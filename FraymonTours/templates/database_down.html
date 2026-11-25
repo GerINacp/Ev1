@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicio temporalmente no disponible</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="landing-page">
+    <main style="min-height: 100vh; display:grid; place-items:center; padding:2rem;">
+        <section style="max-width:680px; text-align:center; padding:3rem; border:1px solid #d8d6cd; background:#f3f2ed;">
+            <div class="landing-eyebrow" style="justify-content:center"><span></span> Fraymon Tours</div>
+            <h1 style="font-size:clamp(2.5rem,8vw,5rem); margin:1rem 0;">ERROR</h1>
+            <p style="font-size:1.25rem;">No puede ingresar a la página por el momento, inténtelo más tarde.</p>
+            <a class="landing-primary-link" href="/" style="display:inline-flex; margin-top:1.5rem;">Volver a inicio <span aria-hidden="true">↗</span></a>
+        </section>
+    </main>
+</body>
+</html>

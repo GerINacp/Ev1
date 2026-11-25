@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraymon Tours</title>
+    <link rel="stylesheet" href="{% static 'Tours/style.css' %}">
+</head>
+<body class="landing-page">
+    <main>
+        <section class="landing-hero" id="inicio">
+            <div class="landing-hero-copy">
+                <div class="landing-eyebrow"><span></span> Chile, sin apuro</div>
+                <h1>Hay lugares<br>que se <em>quedan.</em></h1>
+                <p class="landing-intro">Estamos experimentando una interrupción temporal. La página volverá a estar disponible cuando el servicio sea restablecido.</p>
+                <a class="landing-primary-link" href="/">Actualizar página <span aria-hidden="true">↻</span></a>
+            </div>
+            <figure class="landing-hero-image">
+                <img src="{% static 'Tours/images/costera.jpg' %}" alt="Costa chilena">
+                <figcaption><span>33°01' S</span><span>EL PACÍFICO, DE CERCA</span></figcaption>
+            </figure>
+        </section>
+    </main>
+</body>
+</html>

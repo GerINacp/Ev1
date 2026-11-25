@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.db import DatabaseError
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
@@ -176,7 +177,11 @@ def empleado_dashboard(request):
 
 
 def landing_view(request):
-    tours = Viajes.objects.all()
+    try:
+        tours = Viajes.objects.all()
+    except DatabaseError:
+        return render(request, 'landing_offline.html')
+
     google_places = _fetch_google_places_results()
     combined_destinations = _merge_destinations(tours, google_places)
     map_location = google_places[0] if google_places else None
